@@ -16,6 +16,7 @@ class review:
         self.helpful_points = helpful_points;
 
 
+
 def myanimelistNameSearch(animeName, printing=False):
     url = f"https://myanimelist.net/search/all?q={animeName}"
     response = requests.get(url)
@@ -109,15 +110,27 @@ def myanimelistReviewDownload(link):
         reviews.append(this_review);
     return reviews;
 
-
+def myanimelistGetRatings(link):
+    response = requests.get(link);
+    soup = BeautifulSoup(response.text, "lxml");
+    stats_div = soup.find(class_="stats-block po-r clearfix");
+    stats_div_text = stats_div.text;
+    temp = re.search("^(?P<rating>[^A-Za-z]+)Ranked #(?P<ranking>[^A-Za-z]+)", stats_div_text);
+    community_rating = temp.group("rating");
+    ranking = temp.group("ranking");
+    return community_rating, ranking;
 
 
 
 if __name__ == "__main__":
+    stats, rank = myanimelistGetRatings("https://myanimelist.net/anime/41353/The_God_of_High_School");
+    print(stats, rank)
+    """
     this_reviews = myanimelistReviewDownload("https://myanimelist.net/anime/37403/Ahiru_no_Sora")
     for rev in this_reviews:
         print(rev.username);
         print(rev.image_link);
         print(rev.helpful_points);
+    """
     #main();
 
