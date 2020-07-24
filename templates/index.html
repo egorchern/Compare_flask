@@ -12,7 +12,7 @@
         }
 
         * {
-            font-size: calc(12px + 0.2vw) !important;
+            font-size: calc(12px + 0.2vw)!important;
             font-family: "Roboto" !important;
         }
 
@@ -46,10 +46,10 @@
             background-color: white;
 
             padding: 20px;
-            width: 50%;
+            width: 100%;
 
             margin-left: auto;
-            margin-right:auto;
+            margin-right: auto;
             margin-top: 2vh;
         }
 
@@ -79,10 +79,34 @@
 
         }
 
+        .item_flexbox {
+            margin-top: 2vh;
+            display: flex;
+            flex-direction: column;
+            padding:4px;
+            width:33%;
+            margin-left:auto;
+            margin-right: auto;
+        }
+        
+        .stats_container{
+            width:100%;
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            grid-row-gap: 1.5vh;
+            grid-column-gap: 1vw;
+            text-align: center;
+            
+        }
+        .stats_container p{
+            font-size: calc(17px + 0.9vw) !important;
+            
+        }
+        
         img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            
+            object-fit: contain;
         }
 
     </style>
@@ -100,64 +124,83 @@
 </head>
 
 <body>
-    {%for review in reviews_list%}
-    <div class="review">
-        <div class="pretext_info_grid">
-            <div class="pretext_info_grid-item">
-                <div style="max-width:225px; border-radius:0.45rem">
-                    <img src={{review.image_link}}>
-                </div>
-
+    <div class="item_flexbox">
+        <div class="stats_container">
+            <div style="grid-column-start: 1; grid-column-end: 3; text-align: center;">
+                <p style="font-size:calc(18px + 1.4vw)!important">Myanimelist</p>
             </div>
-            <div class="pretext_info_grid-item">
-                <p>Username: <span style="color:hsl(240, 100%, 45%)">{{review.username}}</span></p>
-                <p><strong>{{review.helpful_points}}</strong> people found this review helpful</p>
+            <div>
+                <p>Average rating:</p>
+                <p>{{mal.average_rating}} / 10</p>
             </div>
-            <div class="pretext_info_grid-item">
-                <table class="table table-bordered score-table">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Overall</td>
-                            <td>{{review.scores[0]}}</td>
-                        </tr>
-                        <tr>
-                            <td>Story</td>
-                            <td>{{review.scores[1]}}</td>
-                        </tr>
-                        <tr>
-                            <td>Animation</td>
-                            <td>{{review.scores[2]}}</td>
-                        </tr>
-                        <tr>
-                            <td>Sound</td>
-                            <td>{{review.scores[3]}}</td>
-                        </tr>
-                        <tr>
-                            <td>Characters</td>
-                            <td>{{review.scores[4]}}</td>
-                        </tr>
-                        <tr>
-                            <td>Enjoyment</td>
-                            <td>{{review.scores[5]}}</td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
+            <div>
+                <p>Ranked:</p>
+                <p>#{{mal.ranking}}</p>
             </div>
+            
+            
         </div>
+        {%for review in mal.reviews_list%}
+        <div class="review">
 
-        <pre class="review-text">
-        {{review.text}}
-        </pre>
+            <div class="pretext_info_grid">
+                <div class="pretext_info_grid-item">
+                    <div style="max-width:225px; border-radius:0.45rem">
+                        <img src={{review.image_link}}>
+                    </div>
+
+                </div>
+                <div class="pretext_info_grid-item">
+                    <p>Username: <span style="color:hsl(240, 100%, 45%)">{{review.username}}</span></p>
+                    <p><strong>{{review.helpful_points}}</strong> people found this review helpful</p>
+                </div>
+                <div class="pretext_info_grid-item">
+                    <table class="table table-bordered score-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Overall</td>
+                                <td>{{review.scores[0]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Story</td>
+                                <td>{{review.scores[1]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Animation</td>
+                                <td>{{review.scores[2]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Sound</td>
+                                <td>{{review.scores[3]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Characters</td>
+                                <td>{{review.scores[4]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Enjoyment</td>
+                                <td>{{review.scores[5]}}</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <pre class="review-text">
+            {{review.text}}
+            </pre>
+        </div>
+        {%endfor%}
     </div>
-    {%endfor%}
+
 </body>
 
 </html>
