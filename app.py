@@ -17,7 +17,7 @@ app = Flask(__name__);
 
 @app.route("/")
 def index():
-    myanimelist_url = "https://myanimelist.net/anime/39196/Mairimashita_Iruma-kun";
+    myanimelist_url = myanimelist_methods.myanimelistNameSearch("bakemonogatari");
     def mal():
 
         reviews_list = myanimelist_methods.myanimelistReviewDownload(myanimelist_url);
