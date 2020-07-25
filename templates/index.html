@@ -51,6 +51,8 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 2vh;
+            overflow-x: hidden;
+            
         }
 
         .review-text {
@@ -100,15 +102,40 @@
         }
         .stats_container p{
             font-size: calc(17px + 0.9vw) !important;
-            
-        }
-        
-        img {
-            width: 100%;
-            
-            object-fit: contain;
+
         }
 
+        img {
+            width: 100%;
+            border-radius: 0.35rem;
+            object-fit: contain;
+        }
+        #anime_info_container{
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+            border: 1.5px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.45rem;
+            background-color: white;
+            padding:20px;
+            display:grid;
+            grid-template-columns: 40fr 60fr;
+            grid-column-gap: 1.1vw;
+            
+            width: 45%;
+            margin-left:auto;
+            margin-right: auto;
+            margin-top: 2vh;
+            text-align: center;
+        }
+        #anime_info_container p{
+            font-size: calc(17px + 0.9vw) !important;
+        }
+        .align_perfectly{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
     </style>
     <meta charset="utf-8" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -124,6 +151,29 @@
 </head>
 
 <body>
+    <div id="anime_info_container">
+        <div style="max-width:300px; grid-row-start: 1; grid-row-end:5">
+            <img src={{info.image_link}}>
+            
+        </div>
+        <div class="align_perfectly">
+            <p>Name: {{info.name}}</p>
+            
+        </div>
+        <div class="align_perfectly">
+            <p>Episodes: {{info.episodes}}</p>
+        </div>
+        <div class="align_perfectly">
+            <p>Aired: {{info.aired}}</p>
+        </div>
+        <div class="align_perfectly">
+            <p>Studios: {{info.studios}}</p>
+        </div>
+        <div class="align_perfectly" style="grid-column-start: 1; grid-column-end: 3; margin-top: 4vh;">
+            <p>Genres: {{info.genres}}</p>
+        </div>
+        
+    </div>
     <div class="item_flexbox">
         <div class="stats_container">
             <div style="grid-column-start: 1; grid-column-end: 3; text-align: center;">
@@ -145,7 +195,7 @@
 
             <div class="pretext_info_grid">
                 <div class="pretext_info_grid-item">
-                    <div style="max-width:225px; border-radius:0.45rem">
+                    <div style="max-width:225px;">
                         <img src={{review.image_link}}>
                     </div>
 

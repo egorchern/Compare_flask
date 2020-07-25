@@ -1,11 +1,19 @@
 import requests;
-import json;
-from threading import Timer;
-import datetime;
-from time import sleep;
+
 import re;
 
 from bs4 import BeautifulSoup;
+
+
+class info:
+    def __init__(self, image_link, name, episodes, aired, studios, genres):
+        self.image_link = image_link;
+        self.name = name;
+        self.episodes = episodes;
+        self.aired = aired;
+        self.studios = studios;
+        self.genres = genres;
+
 
 class review:
     def __init__(self, text, scores, username, image_link, helpful_points):
@@ -14,6 +22,35 @@ class review:
         self.username = username;
         self.image_link = image_link;
         self.helpful_points = helpful_points;
+
+
+def get_info(link):
+    html = requests.get(link).text;
+    soup = BeautifulSoup(html, "lxml");
+    soup = soup.find(class_="borderClass");
+    temp = str(soup.find("img"));
+    retemp = re.search("alt=\"(?P<name>[^\"]+)\" class=\"lazyload\" data-src=\"(?P<image_link>[^\"]+)\"", temp);
+    image_link = retemp.group("image_link");
+    name = retemp.group("name");
+    soup = soup.text;
+    aired = re.search("Aired:\n  (?P<aired>.+)", soup).group("aired");
+    episodes = re.search("Episodes:\n  (?P<episode_number>\w*)", soup).group("episode_number");
+    studios = re.search("Studios:\n(?P<studio_name>\w*)", soup).group("studio_name");
+    genres = re.search("Genres:\n(?P<genres>.+)", soup).group("genres");
+    genres = genres.split(",");
+    for i in range(0, len(genres)):
+        genres[i] = re.sub(" ", "", genres[i]);
+
+    for i in range(0, len(genres)):
+        string = genres[i];
+        middle = int(len(string) / 2);
+        genres[i] = string[0:middle];
+
+    genres = ', '.join(genres);
+
+    inf = info(image_link, name, episodes, aired, studios, genres);
+    return inf;
+
 
 
 
@@ -123,14 +160,4 @@ def myanimelistGetRatings(link):
 
 
 if __name__ == "__main__":
-    stats, rank = myanimelistGetRatings("https://myanimelist.net/anime/41353/The_God_of_High_School");
-    print(stats, rank)
-    """
-    this_reviews = myanimelistReviewDownload("https://myanimelist.net/anime/37403/Ahiru_no_Sora")
-    for rev in this_reviews:
-        print(rev.username);
-        print(rev.image_link);
-        print(rev.helpful_points);
-    """
-    #main();
-
+    pass;
