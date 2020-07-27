@@ -16,8 +16,9 @@ class info:
 
 
 class review:
-    def __init__(self, text, scores, username, image_link, helpful_points):
-        self.text = text;
+    def __init__(self, preview_text, further_text, scores, username, image_link, helpful_points):
+        self.preview_text = preview_text;
+        self.further_text = further_text
         self.scores = scores;
         self.username = username;
         self.image_link = image_link;
@@ -141,9 +142,22 @@ def myanimelistReviewDownload(link):
         helpful_points_list.append(helpful_points);
 
 
+    preview_texts = [];
+    further_texts = [];
+    for text in texts:
+        preview_text = "";
+        further_text = "";
+        if(len(text) > 400):
+            preview_text = text[0:400];
+            further_text = text[400:len(text)];
+        else:
+            preview_text = text;
+        preview_texts.append(preview_text);
+        further_texts.append(further_text);
 
-    for i in range(0, len(texts)):
-        this_review = review(texts[i], scores[i], usernames[i], image_links[i], helpful_points_list[i]);
+
+    for i in range(0, len(image_links)):
+        this_review = review(preview_texts[i], further_texts[i], scores[i], usernames[i], image_links[i], helpful_points_list[i]);
         reviews.append(this_review);
     return reviews;
 

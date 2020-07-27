@@ -17,7 +17,7 @@ app = Flask(__name__);
 
 @app.route("/")
 def index():
-    myanimelist_url = myanimelist_methods.myanimelistNameSearch("bakemonogatari");
+    myanimelist_url = myanimelist_methods.myanimelistNameSearch("dangan");
     def mal():
 
         reviews_list = myanimelist_methods.myanimelistReviewDownload(myanimelist_url);
@@ -33,3 +33,5 @@ def index():
     return render_template("index.html", mal=mal, info=info);
 
 app.run();
+
+
