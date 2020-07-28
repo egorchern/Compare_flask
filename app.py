@@ -47,6 +47,6 @@ def index():
 
     return render_template("index.html", mal=mal, anime_planet=pl, info=info);
 
-app.run(threaded=True, port=5002);
+#app.run(threaded=True, port=5000);
 
 
