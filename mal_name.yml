@@ -1,0 +1,4 @@
+english_name:
+    css: span.title-english
+    xpath: null
+    type: Text

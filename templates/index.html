@@ -6,6 +6,7 @@
     <title></title>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=B612&family=Roboto&display=swap");
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 
         body {
             background-color: hsl(0, 0%, 95%) !important;
@@ -82,13 +83,12 @@
         }
 
         .item_flexbox {
-            margin-top: 2vh;
+            margin: 3vw;
             display: flex;
             flex-direction: column;
             padding:4px;
             width:33%;
-            margin-left:auto;
-            margin-right: auto;
+            
         }
         
         .stats_container{
@@ -106,7 +106,7 @@
         }
 
         img {
-            width: 100%;
+            width:100%;
             border-radius: 0.35rem;
             object-fit: contain;
         }
@@ -142,7 +142,17 @@
             text-decoration: underline;
             color: blue;
         }
-        
+        .main_container{
+            display:flex;
+            width: 100%;
+            justify-content: center;
+            
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .avatar_picture_container{
+            max-width: 100%;
+        }
     </style>
     <script>
         function expandText(obj){
@@ -194,7 +204,8 @@
         </div>
         
     </div>
-    <div class="item_flexbox">
+    <div class="main_container">
+        <div class="item_flexbox">
         <div class="stats_container">
             <div style="grid-column-start: 1; grid-column-end: 3; text-align: center;">
                 <p style="font-size:calc(18px + 1.4vw)!important">Myanimelist</p>
@@ -215,7 +226,7 @@
 
             <div class="pretext_info_grid">
                 <div class="pretext_info_grid-item">
-                    <div style="max-width:225px;">
+                    <div class="avatar_picture_container">
                         <img src={{review.image_link}}>
                     </div>
 
@@ -271,6 +282,82 @@
         </div>
         {%endfor%}
     </div>
+        <div class="item_flexbox">
+        <div class="stats_container">
+            <div style="grid-column-start: 1; grid-column-end: 3; text-align: center;">
+                <p style="font-size:calc(18px + 1.4vw)!important">Anime Planet</p>
+            </div>
+            <div>
+                <p>Average rating:</p>
+                <p>{{anime_planet.average_rating}} / 5</p>
+            </div>
+            <div>
+                <p>Ranked:</p>
+                <p>{{anime_planet.ranking}}</p>
+            </div>
+            
+            
+        </div>
+        {%for review in anime_planet.reviews_list%}
+        <div class="review">
+
+            <div class="pretext_info_grid">
+                <div class="pretext_info_grid-item">
+                    <div class="avatar_picture_container">
+                        <img src={{review.image_link}}>
+                    </div>
+
+                </div>
+                <div class="pretext_info_grid-item">
+                    <p>Username: <span style="color:hsl(240, 100%, 45%)">{{review.username}}</span></p>
+                    <p><strong>{{review.helpful_points}}</strong> people found this review helpful</p>
+                </div>
+                <div class="pretext_info_grid-item">
+                    <table class="table table-bordered score-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Overall</td>
+                                <td>{{review.scores[4]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Story</td>
+                                <td>{{review.scores[0]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Animation</td>
+                                <td>{{review.scores[1]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Sound</td>
+                                <td>{{review.scores[2]}}</td>
+                            </tr>
+                            <tr>
+                                <td>Characters</td>
+                                <td>{{review.scores[3]}}</td>
+                            </tr>
+                            
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <pre class="review-text">
+                {{review.preview_text}}<span onclick="expandText(this)" class="spans">Read more</span><span style="display:none">{{review.further_text}}</span><span onclick="shrinkText(this)" style="display:none" class="spans">Read less</span>
+            </pre>
+
+        </div>
+        {%endfor%}
+    </div>
+    </div>
+    
 
 </body>
 

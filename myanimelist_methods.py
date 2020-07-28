@@ -3,7 +3,7 @@ import requests;
 import re;
 
 from bs4 import BeautifulSoup;
-
+from selectorlib import Extractor;
 
 class info:
     def __init__(self, image_link, name, episodes, aired, studios, genres):
@@ -32,7 +32,7 @@ def get_info(link):
     temp = str(soup.find("img"));
     retemp = re.search("alt=\"(?P<name>[^\"]+)\" class=\"lazyload\" data-src=\"(?P<image_link>[^\"]+)\"", temp);
     image_link = retemp.group("image_link");
-    name = retemp.group("name");
+
     soup = soup.text;
     aired = re.search("Aired:\n  (?P<aired>.+)", soup).group("aired");
     episodes = re.search("Episodes:\n  (?P<episode_number>\w*)", soup).group("episode_number");
@@ -49,13 +49,13 @@ def get_info(link):
 
     genres = ', '.join(genres);
 
-    inf = info(image_link, name, episodes, aired, studios, genres);
+    inf = info(image_link, "", episodes, aired, studios, genres);
     return inf;
 
 
 
 
-def myanimelistNameSearch(animeName, printing=False):
+def get_link(animeName, printing=False):
     url = f"https://myanimelist.net/search/all?q={animeName}"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'lxml');
@@ -80,7 +80,7 @@ def myanimelistNameSearch(animeName, printing=False):
         return link
 
 
-def myanimelistReviewDownload(link):
+def get_reviews(link):
     reviews = [];
     response = requests.get(f"{link}/reviews");
 
@@ -88,6 +88,9 @@ def myanimelistReviewDownload(link):
     soup = BeautifulSoup(response.text, "lxml");
     temp = soup.find_all(class_="spaceit textReadability word-break pt8 mt8");
     texts = [];
+    counter = 0;
+    review_limit = 5;
+
     for reviewDiv in temp:
         #reviewDiv = str(reviewDiv)
         """
@@ -97,7 +100,9 @@ def myanimelistReviewDownload(link):
         """
         text = str(reviewDiv.text);
         texts.append(text);
-
+        counter += 1;
+        if counter >= review_limit:
+            break;
     scores = [];
     for i in range(0, len(texts)):
         temp = texts[i].splitlines();
@@ -127,6 +132,8 @@ def myanimelistReviewDownload(link):
     image_links = [];
     usernames = [];
     helpful_points_list = [];
+    counter = 0;
+    review_limit = 5;
     for item in temp:
         item = str(item);
         item_soup = BeautifulSoup(item, "lxml");
@@ -140,7 +147,9 @@ def myanimelistReviewDownload(link):
         usernames.append(username);
         helpful_points = container.find("span").text;
         helpful_points_list.append(helpful_points);
-
+        counter += 1;
+        if counter >= review_limit:
+            break;
 
     preview_texts = [];
     further_texts = [];
@@ -161,7 +170,7 @@ def myanimelistReviewDownload(link):
         reviews.append(this_review);
     return reviews;
 
-def myanimelistGetRatings(link):
+def get_score_and_ranking(link):
     response = requests.get(link);
     soup = BeautifulSoup(response.text, "lxml");
     stats_div = soup.find(class_="stats-block po-r clearfix");
@@ -174,4 +183,4 @@ def myanimelistGetRatings(link):
 
 
 if __name__ == "__main__":
-    pass;
+    get_reviews(get_link("one piece"))
