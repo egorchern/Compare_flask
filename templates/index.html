@@ -5,155 +5,17 @@
 <head>
     <title></title>
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=B612&family=Roboto&display=swap");
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
-
-        body {
-            background-color: hsl(0, 0%, 95%) !important;
-        }
-
-        * {
-            font-size: calc(12px + 0.2vw)!important;
-            font-family: "Roboto" !important;
-        }
-
-        table {
-
-            font-weight: 500;
-            text-align: center;
-            width: 100% !important;
-            max-width: 300px;
-
-        }
-
-        tbody tr {
-            background-color: white;
-
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: hsl(0, 0%, 97%);
-
-        }
-
-        tbody td {
-            padding: 0.15rem !important;
-        }
-
-        .review {
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-            border: 1.5px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.45rem;
-            background-color: white;
-
-            padding: 20px;
-            width: 100%;
-
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 2vh;
-            overflow-x: hidden;
-            
-        }
-
-        .review-text {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-
-        }
-
-        .pretext_info_grid {
-            width: 100%;
-            padding: 10px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-column-gap: 1vw;
-
-        }
-
-        .pretext_info_grid-item {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-
-
-        }
-
-        .item_flexbox {
-            margin: 3vw;
-            display: flex;
-            flex-direction: column;
-            padding:4px;
-            width:33%;
-            
-        }
         
-        .stats_container{
-            width:100%;
-            display:grid;
-            grid-template-columns: 1fr 1fr;
-            grid-row-gap: 1.5vh;
-            grid-column-gap: 1vw;
-            text-align: center;
-            
-        }
-        .stats_container p{
-            font-size: calc(17px + 0.9vw) !important;
-
-        }
-
-        img {
-            width:100%;
-            border-radius: 0.35rem;
-            object-fit: contain;
-        }
-        #anime_info_container{
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-            border: 1.5px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.45rem;
-            background-color: white;
-            padding:20px;
-            display:grid;
-            grid-template-columns: 40fr 60fr;
-            grid-column-gap: 1.1vw;
-            grid-row-gap:5px;
-            width: 45%;
-            margin-left:auto;
-            margin-right: auto;
-            margin-top: 2vh;
-            text-align: center;
-        }
-        #anime_info_container p{
-            font-size: calc(17px + 0.55vw) !important;
-        }
-        
-        .align_perfectly{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .spans{
-            margin-left: 5px;
-            cursor:pointer;
-            text-decoration: underline;
-            color: blue;
-        }
-        .main_container{
-            display:flex;
-            width: 100%;
-            justify-content: center;
-            
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-        .avatar_picture_container{
-            max-width: 100%;
-        }
     </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108190186-4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108190186-4');
+    </script>
     <script>
         function expandText(obj){
             spans = $(obj).parent().children();
@@ -173,16 +35,17 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <!-- <link rel=stylesheet href="Main.css"> -->
+    <link rel=stylesheet href="{{url_for('static', filename='main.css')}}">
+    <link rel=stylesheet href="{{url_for('static', filename='media_queries_main.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="{{url_for('static', filename='main.js')}}"></script>
 
     
 </head>
 
 <body>
     <div id="anime_info_container">
-        <div style="max-width:300px; grid-row-start: 1; grid-row-end:5">
+        <div id ="anime_image_container" class="align_perfectly">
             <img src={{info.image_link}}>
             
         </div>
@@ -199,7 +62,7 @@
         <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
             <p>Studios: {{info.studios}}</p>
         </div>
-        <div class="align_perfectly" style="grid-column-start: 1; grid-column-end: 3; margin-top: 4vh;">
+        <div id= 'genres'class="align_perfectly" >
             <p>Genres: {{info.genres}}</p>
         </div>
         
@@ -229,12 +92,14 @@
                     <div class="avatar_picture_container">
                         <img src={{review.image_link}}>
                     </div>
+                    <div style="margin-top: 10%;">
+                        <p>Username: <span style="color:hsl(240, 100%, 45%)"><strong>{{review.username}}</strong></span></p>
+                        <p>Helpful <strong>({{review.helpful_points}})</strong></p>
+                    </div>
+                    
 
                 </div>
-                <div class="pretext_info_grid-item">
-                    <p>Username: <span style="color:hsl(240, 100%, 45%)">{{review.username}}</span></p>
-                    <p><strong>{{review.helpful_points}}</strong> people found this review helpful</p>
-                </div>
+                
                 <div class="pretext_info_grid-item">
                     <table class="table table-bordered score-table">
                         <thead>
@@ -306,12 +171,14 @@
                     <div class="avatar_picture_container">
                         <img src={{review.image_link}}>
                     </div>
+                    <div style="margin-top: 10%;">
+                        <p>Username: <span style="color:hsl(240, 100%, 45%)"><strong>{{review.username}}</strong></span></p>
+                        <p>Helpful <strong>({{review.helpful_points}})</strong></p>
+                    </div>
+                    
 
                 </div>
-                <div class="pretext_info_grid-item">
-                    <p>Username: <span style="color:hsl(240, 100%, 45%)">{{review.username}}</span></p>
-                    <p><strong>{{review.helpful_points}}</strong> people found this review helpful</p>
-                </div>
+                
                 <div class="pretext_info_grid-item">
                     <table class="table table-bordered score-table">
                         <thead>

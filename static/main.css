@@ -1,0 +1,154 @@
+		@import url("https://fonts.googleapis.com/css2?family=B612&family=Roboto&display=swap");
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
+        body {
+            background-color: hsl(0, 0%, 95%) !important;
+        }
+
+        * {
+            font-size: calc(12px + 0.2vw)!important;
+            font-family: "Roboto" !important;
+        }
+
+        table {
+
+            font-weight: 500;
+            text-align: center;
+            width: 100% !important;
+            /*max-width: 300px;*/
+            margin-bottom: 0 !important;
+
+        }
+
+        tbody tr {
+            background-color: white;
+
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: hsl(0, 0%, 97%);
+
+        }
+
+        tbody td {
+            padding: 0.15rem !important;
+        }
+
+        .review {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+            border: 1.5px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.45rem;
+            background-color: white;
+
+            padding: 20px;
+            width: 100%;
+
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2vh;
+            overflow-x: hidden;
+            
+        }
+
+        .review-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+
+        }
+
+        .pretext_info_grid {
+            width: 100%;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: max(15px, 2.1vw);
+
+        }
+
+        .pretext_info_grid-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+
+
+        }
+
+        .item_flexbox {
+            margin: 2%;
+            display: flex;
+            flex-direction: column;
+            padding:4px;
+            width:36.5%;
+            
+        }
+        
+        .stats_container{
+            width:100%;
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            grid-row-gap: 1.5vh;
+            grid-column-gap: 1vw;
+            text-align: center;
+            
+        }
+        .stats_container p{
+            font-size: calc(17px + 0.9vw) !important;
+
+        }
+
+        img {
+            max-width:100%;
+            border-radius: 0.35rem;
+            
+            
+        }
+        #anime_info_container{
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+            border: 1.5px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.45rem;
+            max-width: 675px;
+            background-color: white;
+            padding:20px;
+            display:grid;
+            
+            grid-column-gap: 1.25vw;
+            grid-row-gap:5px;
+            
+            margin-left:auto;
+            margin-right: auto;
+            margin-top: 2vh;
+            text-align: center;
+        }
+        #anime_info_container p{
+            font-size: calc(17px + 0.55vw) !important;
+        }
+        
+        .align_perfectly{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .spans{
+            margin-left: 5px;
+            cursor:pointer;
+            text-decoration: underline;
+            color: blue;
+        }
+        .main_container{
+            display:flex;
+            width: 100%;
+            justify-content: center;
+            
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .avatar_picture_container{
+            
+        }
+.pretext_info_grid-item > * {
+    max-width: 200px;
+}

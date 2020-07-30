@@ -99,7 +99,11 @@ def get_reviews(link):
     soup = soup.find_all("div", {"class": "cta horizontal-cta recoCta"});
     for panel_container in soup:
         helpful_container = panel_container.find_all("a", {"class": "rated off"})[1];
-        points = re.search("\((?P<points>\d*)\)", helpful_container.text).group("points");
+        points = re.search("\((?P<points>\d*)\)", helpful_container.text)
+        if points != None:
+            points = points.group("points");
+        else:
+            points = "0";
         helpful_points.append(points);
 
     for i in range(0, len(names)):
@@ -118,4 +122,4 @@ def get_name(link):
 
 
 if __name__ == "__main__":
-    pass;
+    get_reviews(get_link("Tower of god"))

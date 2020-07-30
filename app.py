@@ -2,6 +2,7 @@ import myanimelist_methods;
 from flask import Flask, render_template;
 import anime_planet_methods;
 import re;
+import os;
 
 
 class myanimelist:
@@ -21,10 +22,11 @@ class animePlanet:
 
 
 app = Flask(__name__);
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 @app.route("/")
 def index():
-    anime_name = "One Piece";
+    anime_name = "One piece";
     def mal():
         link = myanimelist_methods.get_link(anime_name);
         reviews_list = myanimelist_methods.get_reviews(link);
@@ -47,6 +49,6 @@ def index():
 
     return render_template("index.html", mal=mal, anime_planet=pl, info=info);
 
-#app.run(threaded=True, port=5000);
+
 
 

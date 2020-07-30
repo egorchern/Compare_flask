@@ -1,0 +1,42 @@
+@media (max-width: 650px){
+    #anime_info_container{
+        width: 85%;
+        grid-template-columns: auto;
+        grid-row-gap: 2vh;
+    }
+    .item_flexbox{
+        width:95%;
+    }
+    .review{
+        padding: 10px;
+    }
+    
+}
+@media (min-width: 650.001px){
+    .item_flexbox{
+        max-width:570px;
+    }
+    #anime_info_container{
+        width: 45%;
+        grid-template-columns: 40fr 60fr;
+    }
+    #anime_image_container{
+        max-width:300px;
+        grid-row-start: 1;
+        grid-row-end:5;
+    }
+    #genres{
+        grid-column-start: 1; 
+        grid-column-end: 3;
+        margin-top: 4vh;
+    }
+}
+
+@media (min-width: 650.001px) and (max-width: 1000px){
+    .item_flexbox{
+        width: 45%;
+    }
+    .review{
+        padding: 15px;
+    }
+}
