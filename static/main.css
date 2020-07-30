@@ -1,5 +1,5 @@
 		@import url("https://fonts.googleapis.com/css2?family=B612&family=Roboto&display=swap");
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+        
 
         body {
             background-color: hsl(0, 0%, 95%) !important;
@@ -7,8 +7,8 @@
 
         * {
             font-size: calc(12px + 0.2vw)!important;
-            font-family: "Roboto" !important;
-        }
+            font-family: "Roboto", sans-serif!important;
+        } 
 
         table {
 

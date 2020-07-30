@@ -26,7 +26,7 @@ app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 @app.route("/")
 def index():
-    anime_name = "One piece";
+    anime_name = "Owarimonogatari";
     def mal():
         link = myanimelist_methods.get_link(anime_name);
         reviews_list = myanimelist_methods.get_reviews(link);
@@ -47,7 +47,7 @@ def index():
 
 
 
-    return render_template("index.html", mal=mal, anime_planet=pl, info=info);
+    return render_template("query_results.html", mal=mal, anime_planet=pl, info=info);
 
 
 
