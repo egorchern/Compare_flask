@@ -1,0 +1,64 @@
+#type_container {
+                padding: 5px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 0.5vh;
+                
+    
+            }
+            label{
+                font-size: calc(17px + 0.5vw) !important;
+            }
+            .media_containers{
+                cursor:default;
+                margin: 4px;
+                text-align: center;
+                padding-left: calc(17px + 2vw);
+                padding-right: calc(17px + 2vw);
+                padding-top: calc(17px + 2vh);
+                padding-bottom: calc(17px + 2vh);
+                font-size: calc(17px + 0.9vw) !important;
+                transition-duration: 0.25s;
+                
+            }
+            .hovers{
+                cursor:pointer;
+            }
+            .hovers:hover{
+                box-shadow:  0px 0px 6px 5px hsl(216, 100%, 78%);
+            }
+            #query_form{
+                text-align: center;
+                width: 60%;
+                max-width:700px;
+                background-color: white;
+                box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+                border: 1.5px solid rgba(0, 0, 0, 0.125);
+                border-radius: 0.45rem;
+                margin-top:3vh;
+                margin-left:auto;
+                margin-right:auto;
+                padding: 12px;
+            }
+            .search_bar_container{
+                margin-top:2vh;
+                position:relative;
+                width:85%;
+                margin-left:auto;
+                margin-right:auto;
+            }
+            .form-control{
+                border-radius: 1rem!important;
+            }
+            @media (max-width:870px){
+                #query_form{
+                    width: 75%;
+                }
+            }
+            .chosen{
+                cursor:pointer;
+                box-shadow:  0px 0px 6px 5px hsl(216, 100%, 78%);
+            }

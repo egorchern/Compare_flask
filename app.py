@@ -1,5 +1,5 @@
 import myanimelist_methods;
-from flask import Flask, render_template;
+from flask import Flask, render_template, request;
 import anime_planet_methods;
 import re;
 import os;
@@ -26,13 +26,21 @@ app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 @app.route("/")
 def index():
-    anime_name = "Owarimonogatari";
+    return render_template("index.html");
+
+@app.route("/anime", methods=["POST"])
+def anime():
+
+
+    anime_name = request.form["media_name"];
+
     def mal():
         link = myanimelist_methods.get_link(anime_name);
         reviews_list = myanimelist_methods.get_reviews(link);
         average_rating, ranking = myanimelist_methods.get_score_and_ranking(link);
         mal = myanimelist(reviews_list, average_rating, ranking);
         return mal;
+
     def anime_planet():
         link = anime_planet_methods.get_link(anime_name);
         reviews_list = anime_planet_methods.get_reviews(link);
@@ -45,10 +53,8 @@ def index():
     mal = mal();
     pl = anime_planet();
 
-
-
     return render_template("query_results.html", mal=mal, anime_planet=pl, info=info);
 
-
-
-
+@app.route("/manga", methods=["POST"])
+def manga():
+    pass;
