@@ -24,16 +24,19 @@ class animePlanet:
 app = Flask(__name__);
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
+
 @app.route("/")
 def index():
     return render_template("index.html");
 
+
 @app.route("/anime", methods=["POST"])
 def anime():
-
+    #name = request.args["name"];
+    #print(name);
 
     anime_name = request.form["media_name"];
-
+    #anime_name = name;
     def mal():
         link = myanimelist_methods.get_link(anime_name);
         reviews_list = myanimelist_methods.get_reviews(link);

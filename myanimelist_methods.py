@@ -199,5 +199,7 @@ def get_score_and_ranking(link):
 
 
 
+
+
 if __name__ == "__main__":
     get_reviews(get_link("one piece"))
