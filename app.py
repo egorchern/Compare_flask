@@ -32,32 +32,55 @@ def index():
 
 @app.route("/anime", methods=["POST"])
 def anime():
-    #name = request.args["name"];
-    #print(name);
+
+
 
     anime_name = request.form["media_name"];
-    #anime_name = name;
+
     def mal():
-        link = myanimelist_methods.get_link(anime_name);
-        reviews_list = myanimelist_methods.get_reviews(link);
-        average_rating, ranking = myanimelist_methods.get_score_and_ranking(link);
+        link = myanimelist_methods.anime.get_link(anime_name);
+        reviews_list = myanimelist_methods.anime.get_reviews(link);
+        average_rating, ranking = myanimelist_methods.anime.get_score_and_ranking(link);
         mal = myanimelist(reviews_list, average_rating, ranking);
         return mal;
 
     def anime_planet():
-        link = anime_planet_methods.get_link(anime_name);
-        reviews_list = anime_planet_methods.get_reviews(link);
-        average_rating, ranking = anime_planet_methods.get_score_and_ranking(link);
+        link = anime_planet_methods.anime.get_link(anime_name);
+        reviews_list = anime_planet_methods.anime.get_reviews(link);
+        average_rating, ranking = anime_planet_methods.anime.get_score_and_ranking(link);
         pl = animePlanet(reviews_list, average_rating, ranking);
         return pl;
 
-    info = myanimelist_methods.get_info(myanimelist_methods.get_link(anime_name))
-    info.name = anime_planet_methods.get_name(anime_planet_methods.get_link(anime_name));
+    info = myanimelist_methods.anime.get_info(myanimelist_methods.anime.get_link(anime_name))
+    info.name = anime_planet_methods.anime.get_name(anime_planet_methods.anime.get_link(anime_name));
     mal = mal();
     pl = anime_planet();
 
-    return render_template("query_results.html", mal=mal, anime_planet=pl, info=info);
+    return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info);
+
 
 @app.route("/manga", methods=["POST"])
 def manga():
-    pass;
+    manga_name = request.form["media_name"];
+
+    def mal():
+        link = myanimelist_methods.manga.get_link(manga_name);
+        reviews_list = myanimelist_methods.manga.get_reviews(link);
+        average_rating, ranking = myanimelist_methods.manga.get_score_and_ranking(link);
+        mal = myanimelist(reviews_list, average_rating, ranking);
+        return mal;
+
+    def anime_planet():
+        link = anime_planet_methods.manga.get_link(manga_name);
+        reviews_list = anime_planet_methods.manga.get_reviews(link);
+        average_rating, ranking = anime_planet_methods.manga.get_score_and_ranking(link);
+        pl = animePlanet(reviews_list, average_rating, ranking);
+        return pl;
+
+    info = myanimelist_methods.manga.get_info(myanimelist_methods.manga.get_link(manga_name))
+    info.name = anime_planet_methods.manga.get_name(anime_planet_methods.manga.get_link(manga_name));
+    mal = mal();
+    pl = anime_planet();
+
+    return render_template("manga_query_results.html", mal=mal, anime_planet=pl, info=info);
+
