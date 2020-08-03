@@ -1,4 +1,5 @@
 import myanimelist_methods;
+import imbd_methods;
 from flask import Flask, render_template, request;
 import anime_planet_methods;
 import re;
@@ -18,6 +19,12 @@ class animePlanet:
         self.average_rating = average_rating;
         self.ranking = ranking;
 
+
+class imbd:
+    def __init__(self, reviews_list, average_rating, ranking):
+        self.reviews_list = reviews_list;
+        self.average_rating = average_rating;
+        self.ranking = ranking;
 
 
 
@@ -51,12 +58,20 @@ def anime():
         pl = animePlanet(reviews_list, average_rating, ranking);
         return pl;
 
+    def imd():
+        link = imbd_methods.anime.get_link(anime_name);
+        reviews_list = imbd_methods.anime.get_reviews(link);
+        average_rating, ranking = imbd_methods.anime.get_score_and_ranking(link);
+        imb = imbd(reviews_list, average_rating, ranking);
+        return imb;
+
     info = myanimelist_methods.anime.get_info(myanimelist_methods.anime.get_link(anime_name))
     info.name = anime_planet_methods.anime.get_name(anime_planet_methods.anime.get_link(anime_name));
     mal = mal();
     pl = anime_planet();
+    imb = imd();
 
-    return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info);
+    return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info, imbd=imb);
 
 
 @app.route("/manga", methods=["POST"])
