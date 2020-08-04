@@ -1,0 +1,4 @@
+score:
+    css: 'em em em em em:nth-of-type(1)'
+    xpath: null
+    type: Text

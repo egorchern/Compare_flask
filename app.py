@@ -1,5 +1,6 @@
 import myanimelist_methods;
 import imbd_methods;
+import manganelo_methods;
 from flask import Flask, render_template, request;
 import anime_planet_methods;
 import re;
@@ -26,6 +27,11 @@ class imbd:
         self.average_rating = average_rating;
         self.ranking = ranking;
 
+
+class manganelo:
+    def __init__(self, average_rating, ranking):
+        self.average_rating = average_rating;
+        self.ranking = ranking;
 
 
 app = Flask(__name__);
@@ -92,10 +98,17 @@ def manga():
         pl = animePlanet(reviews_list, average_rating, ranking);
         return pl;
 
+    def manganel():
+        link = manganelo_methods.manga.get_link(manga_name);
+        average_rating, ranking = manganelo_methods.manga.get_score_and_ranking(link);
+        mn = manganelo(average_rating, ranking);
+        return mn;
+
     info = myanimelist_methods.manga.get_info(myanimelist_methods.manga.get_link(manga_name))
     info.name = anime_planet_methods.manga.get_name(anime_planet_methods.manga.get_link(manga_name));
     mal = mal();
     pl = anime_planet();
+    mn = manganel();
 
-    return render_template("manga_query_results.html", mal=mal, anime_planet=pl, info=info);
+    return render_template("manga_query_results.html", mal=mal, anime_planet=pl, manganelo=mn, info=info);
 
