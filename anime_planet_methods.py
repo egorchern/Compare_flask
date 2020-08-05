@@ -268,8 +268,4 @@ class manga:
 
 
 if __name__ == "__main__":
-    link = manga.get_link("slam dunk");
-    score = manga.get_score_and_ranking(link);
-
-    reviews = manga.get_reviews(link);
-    print(reviews[0].scores, reviews[0].preview_text)
+    pass;

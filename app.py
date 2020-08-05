@@ -1,6 +1,7 @@
 import myanimelist_methods;
 import imbd_methods;
 import manganelo_methods;
+import anilist_methods;
 from flask import Flask, render_template, request;
 import anime_planet_methods;
 import re;
@@ -33,6 +34,11 @@ class manganelo:
         self.average_rating = average_rating;
         self.ranking = ranking;
 
+
+class anilist:
+    def __init__(self, average_rating, ranking):
+        self.average_rating = average_rating;
+        self.ranking = ranking;
 
 app = Flask(__name__);
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
@@ -70,14 +76,19 @@ def anime():
         average_rating, ranking = imbd_methods.anime.get_score_and_ranking(link);
         imb = imbd(reviews_list, average_rating, ranking);
         return imb;
+    def anilis():
+        average_rating, ranking = anilist_methods.anime.get_score_and_ranking(anime_name);
+        anl = anilist(average_rating, ranking);
+        return anl;
 
     info = myanimelist_methods.anime.get_info(myanimelist_methods.anime.get_link(anime_name))
     info.name = anime_planet_methods.anime.get_name(anime_planet_methods.anime.get_link(anime_name));
     mal = mal();
     pl = anime_planet();
     imb = imd();
+    anl = anilis();
 
-    return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info, imbd=imb);
+    return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info, imbd=imb, anilist=anl);
 
 
 @app.route("/manga", methods=["POST"])
@@ -111,4 +122,8 @@ def manga():
     mn = manganel();
 
     return render_template("manga_query_results.html", mal=mal, anime_planet=pl, manganelo=mn, info=info);
+
+@app.route("/book", methods=["POST"])
+def book():
+    return "not done";
 

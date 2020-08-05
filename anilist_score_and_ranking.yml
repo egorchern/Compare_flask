@@ -1,0 +1,8 @@
+rank:
+    css: 'a.ranking.rated span.rank-text'
+    xpath: null
+    type: Text
+score:
+    css: 'div.el-tooltip div.value'
+    xpath: null
+    type: Text

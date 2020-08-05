@@ -25,20 +25,22 @@
                 alert("Please choose a category");
             } else {
                 var text = $("#media_name").val();
-
-
+				console.log(typeof(text));
+				
                 if (text === "") {
                     alert("Please enter a name of anime/manga/book you want to search");
                 } else {
                     var category = chosenId;
                     if (category === "anime") {
-
-
-                        $('#query_form').attr("action", "{{url_for('anime')}}");
+						
+						{{text}}
+                        $('#query_form').attr("action", "{{url_for('anime', name=text)}}");
                     } else if (category === "manga") {
-                        $('#query_form').attr("action", "{{url_for('manga')}}");
-                    }
-
+                        $('#query_form').attr("action", `{{url_for('manga')}}`);
+                    } else if (category === "book") {
+                        $('#query_form').attr("action", `{{url_for('book')}}`);
+					}
+                   
                     $('#query_form').submit();
 
                 }
@@ -56,6 +58,10 @@
     <link rel=stylesheet href="{{url_for('static', filename='search_form.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="{{url_for('static', filename='main.js')}}"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='favicon-16x16.png')}}">
+    <link rel="manifest" href="{{url_for('static', filename='site.webmanifest')}}">
 
 
 </head>
@@ -324,6 +330,24 @@
 
             </div>
             {%endfor%}
+        </div>
+        <div class="item_flexbox">
+            <div class="stats_container">
+                <div style="grid-column-start: 1; grid-column-end: 3; text-align: center;">
+                    <p style="font-size:calc(18px + 1.4vw)!important">AniList</p>
+                </div>
+                <div>
+                    <p>Average rating:</p>
+                    <p>{{anilist.average_rating}} / 100</p>
+                </div>
+                <div>
+                    <p>Ranked:</p>
+                    <p>{{anilist.ranking}}</p>
+                </div>
+
+
+            </div>
+            
         </div>
     </div>
 
