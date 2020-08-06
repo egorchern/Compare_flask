@@ -25,7 +25,7 @@ class anime:
             media = response["data"]["Media"];
             id_ = media["id"];
             url = f"https://anilist.co/anime/{id_}";
-            html = get(url).text;
+            html = get(url, timeout=5).text;
             e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
             data = e.extract(html);
             score = sub("%", "", data["score"]);
@@ -55,7 +55,7 @@ class manga:
             media = response["data"]["Media"];
             id_ = media["id"];
             url = f"https://anilist.co/manga/{id_}";
-            html = get(url).text;
+            html = get(url, timeout=5).text;
             e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
             data = e.extract(html);
             score = sub("%", "", data["score"]);

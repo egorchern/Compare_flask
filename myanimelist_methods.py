@@ -29,7 +29,7 @@ class anime:
     def get_info(link):
         try:
 
-            html = get(link).text;
+            html = get(link, timeout=5).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
@@ -64,7 +64,7 @@ class anime:
         try:
 
             url = f"https://myanimelist.net/anime.php?q={animeName}&type=0&score=0&status=0&p=0&r=0&sm=0&sd=0&sy=0&em=0&ed=0&ey=0&c%5B%5D=a&c%5B%5D=b&c%5B%5D=c&c%5B%5D=f&gx=0"
-            response = get(url)
+            response = get(url, timeout=5 )
             soup = BeautifulSoup(response.text, 'lxml');
             soup = soup.find("div", {"class": "js-categories-seasonal js-block-list list"});
             trs = soup.find_all("tr");
@@ -101,7 +101,7 @@ class anime:
         try:
 
             reviews = [];
-            response = get(f"{link}/reviews");
+            response = get(f"{link}/reviews", timeout=5);
 
 
             soup = BeautifulSoup(response.text, "lxml");
@@ -195,7 +195,7 @@ class anime:
     def get_score_and_ranking(link):
         try:
 
-            response = get(link);
+            response = get(link, timeout=5);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;
@@ -210,7 +210,7 @@ class manga:
     def get_info(link):
         try:
 
-            html = get(link).text;
+            html = get(link, timeout=5).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
@@ -243,7 +243,7 @@ class manga:
         try:
 
             url = f"https://myanimelist.net/manga.php?q={animeName}&type=0&score=0&status=0&p=0&r=0&sm=0&sd=0&sy=0&em=0&ed=0&ey=0&c%5B%5D=a&c%5B%5D=b&c%5B%5D=c&c%5B%5D=f&gx=0"
-            response = get(url)
+            response = get(url, timeout=5)
             soup = BeautifulSoup(response.text, 'lxml');
             soup = soup.find("div", {"class": "js-categories-seasonal js-block-list list"});
             trs = soup.find_all("tr");
@@ -278,7 +278,7 @@ class manga:
     def get_reviews(link):
         try:
             reviews = [];
-            response = get(f"{link}/reviews");
+            response = get(f"{link}/reviews", timeout=5);
 
             soup = BeautifulSoup(response.text, "lxml");
             temp = soup.find_all(class_="spaceit textReadability word-break pt8 mt8");
@@ -372,7 +372,7 @@ class manga:
     def get_score_and_ranking(link):
         try:
 
-            response = get(link);
+            response = get(link, timeout=5);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;
@@ -387,6 +387,6 @@ class manga:
 
 if __name__ == "__main__":
 
-    link = manga.get_link("solo leveling")
-    print(link)
+    link = anime.get_link("oreimo");
+    print(link);
 

@@ -42,7 +42,7 @@ class anime:
 
     def get_score_and_ranking(link):
         try:
-            html = get(link).text;
+            html = get(link, timeout=5).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find("section", {"class" : "pure-g entryBar"});
@@ -60,7 +60,7 @@ class anime:
 
             reviews = [];
             url = f"{link}/reviews?sort=helpful";
-            html = get(url).text;
+            html = get(url, timeout=5).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find(class_="pure-1 md-4-5 controlBar");
@@ -132,7 +132,7 @@ class anime:
     def get_name(link):
         try:
 
-            html = get(link).text;
+            html = get(link, timeout=5).text;
             e = Extractor.from_yaml_file("yml/anime_name.yml");
             name = e.extract(html)["english_name"];
             return name;
@@ -167,7 +167,7 @@ class manga:
 
     def get_score_and_ranking(link):
         try:
-            html = get(link).text;
+            html = get(link, timeout=5).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find("section", {"class" : "pure-g entryBar"});
@@ -185,7 +185,7 @@ class manga:
 
             reviews = [];
             url = f"{link}/reviews?sort=helpful";
-            html = get(url).text;
+            html = get(url, timeout=5).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find(class_="pure-1 md-4-5 controlBar");
@@ -258,7 +258,7 @@ class manga:
     def get_name(link):
         try:
 
-            html = get(link).text;
+            html = get(link, timeout=5).text;
             e = Extractor.from_yaml_file("yml/anime_name.yml");
             name = e.extract(html)["english_name"];
             return name;

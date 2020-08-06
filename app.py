@@ -3,9 +3,9 @@ import imbd_methods;
 import manganelo_methods;
 import anilist_methods;
 from flask import Flask, render_template, request;
+from threading import Thread, Event;
 import anime_planet_methods;
-import re;
-import os;
+
 
 
 class myanimelist:
@@ -40,6 +40,7 @@ class anilist:
         self.average_rating = average_rating;
         self.ranking = ranking;
 
+
 app = Flask(__name__);
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
@@ -51,8 +52,6 @@ def index():
 
 @app.route("/anime", methods=["POST"])
 def anime():
-
-
 
     anime_name = request.form["media_name"];
 
@@ -80,6 +79,7 @@ def anime():
         average_rating, ranking = anilist_methods.anime.get_score_and_ranking(anime_name);
         anl = anilist(average_rating, ranking);
         return anl;
+
 
     info = myanimelist_methods.anime.get_info(myanimelist_methods.anime.get_link(anime_name))
     info.name = anime_planet_methods.anime.get_name(anime_planet_methods.anime.get_link(anime_name));
