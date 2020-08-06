@@ -1,0 +1,4 @@
+imbd_score:
+    css: 'strong span'
+    xpath: null
+    type: Text

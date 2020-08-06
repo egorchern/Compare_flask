@@ -1,6 +1,6 @@
-import requests;
+from requests import post, get;
 
-import re;
+from re import sub;
 
 from bs4 import BeautifulSoup;
 from selectorlib import Extractor;
@@ -11,33 +11,62 @@ class anime:
 
             query = '''
                 query($search: String){
-                Media(search: $search){
-                    id
-                    
-                    }
+                    Media(search: $search, format_not:MANGA){
+                        id
+                        
+                        }
                 }
                 '''
             variables = {
                 "search": name
             };
             url = 'https://graphql.anilist.co';
-            response = requests.post(url, json={'query': query, "variables":variables} ).json();
+            response = post(url, json={'query': query, "variables":variables} ).json();
             media = response["data"]["Media"];
             id_ = media["id"];
             url = f"https://anilist.co/anime/{id_}";
-            html = requests.get(url).text;
-            e = Extractor.from_yaml_file("anilist_score_and_ranking.yml");
+            html = get(url).text;
+            e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
             data = e.extract(html);
-            score = re.sub("%", "", data["score"]);
+            score = sub("%", "", data["score"]);
             rank = data["rank"];
             return score, rank;
         except:
             return "NULL","NULL";
 
 
+class manga:
+    def get_score_and_ranking(name):
+        try:
+
+            query = '''
+                query($search: String){
+                    Media(search: $search, format_in:[MANGA]){
+                        id
+
+                        }
+                }
+                '''
+            variables = {
+                "search": name
+            };
+            url = 'https://graphql.anilist.co';
+            response = post(url, json={'query': query, "variables": variables}).json();
+            media = response["data"]["Media"];
+            id_ = media["id"];
+            url = f"https://anilist.co/manga/{id_}";
+            html = get(url).text;
+            e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
+            data = e.extract(html);
+            score = sub("%", "", data["score"]);
+            rank = data["rank"];
+            return score, rank;
+        except:
+            return "NULL", "NULL";
+
 
 
 if __name__ == "__main__":
-    score, ranking = anime.get_score_and_ranking("nisekoi");
+    score, ranking = manga.get_score_and_ranking("grand blue");
     print("fa");
 

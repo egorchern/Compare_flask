@@ -115,13 +115,19 @@ def manga():
         mn = manganelo(average_rating, ranking);
         return mn;
 
+    def anilis():
+        average_rating, ranking = anilist_methods.manga.get_score_and_ranking(manga_name);
+        anl = anilist(average_rating, ranking);
+        return anl;
+
+    anl = anilis();
     info = myanimelist_methods.manga.get_info(myanimelist_methods.manga.get_link(manga_name))
     info.name = anime_planet_methods.manga.get_name(anime_planet_methods.manga.get_link(manga_name));
     mal = mal();
     pl = anime_planet();
     mn = manganel();
 
-    return render_template("manga_query_results.html", mal=mal, anime_planet=pl, manganelo=mn, info=info);
+    return render_template("manga_query_results.html", mal=mal, anime_planet=pl, manganelo=mn, info=info, anilist=anl);
 
 @app.route("/book", methods=["POST"])
 def book():

@@ -1,6 +1,6 @@
-import requests;
+from requests import get;
 
-import re;
+from re import sub, search;
 
 from bs4 import BeautifulSoup;
 from selectorlib import Extractor;
@@ -18,8 +18,8 @@ class anime:
     def get_link(name):
         try:
 
-            name = re.sub(" ", "-", name).lower();
-            name = re.sub("[^0-9a-zA-Z\-]", "", name);
+            name = sub(" ", "-", name).lower();
+            name = sub("[^0-9a-zA-Z\-]", "", name);
 
             link = f"https://www.anime-planet.com/anime/{name}";
             return link;
@@ -42,15 +42,15 @@ class anime:
 
     def get_score_and_ranking(link):
         try:
-            html = requests.get(link).text;
+            html = get(link).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find("section", {"class" : "pure-g entryBar"});
             soup = soup.find_all("div", {"class": "pure-1 md-1-5"});
             score_temp = soup[-2].text;
             rank_temp = soup[-1].text;
-            score = re.search("(?P<score>[0-9.]+) out", score_temp).group("score");
-            rank = re.search("(?P<rank>#[^ ]+)", rank_temp).group("rank");
+            score = search("(?P<score>[0-9.]+) out", score_temp).group("score");
+            rank = search("(?P<rank>#[^ ]+)", rank_temp).group("rank");
             return score, rank;
         except:
             return "NULL","NULL"
@@ -60,7 +60,7 @@ class anime:
 
             reviews = [];
             url = f"{link}/reviews?sort=helpful";
-            html = requests.get(url).text;
+            html = get(url).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find(class_="pure-1 md-4-5 controlBar");
@@ -100,7 +100,7 @@ class anime:
                 scores = [];
                 for sub_score in sub_scores:
                     score_text = sub_score.text;
-                    score = re.search("(?P<score>.*)/10", score_text).group("score");
+                    score = search("(?P<score>.*)/10", score_text).group("score");
 
                     scores.append(score);
 
@@ -113,7 +113,7 @@ class anime:
             soup = soup.find_all("div", {"class": "cta horizontal-cta recoCta"});
             for panel_container in soup:
                 helpful_container = panel_container.find_all("a", {"class": "rated off"})[1];
-                points = re.search("\((?P<points>\d*)\)", helpful_container.text)
+                points = search("\((?P<points>\d*)\)", helpful_container.text)
                 if points != None:
                     points = points.group("points");
                 else:
@@ -132,8 +132,8 @@ class anime:
     def get_name(link):
         try:
 
-            html = requests.get(link).text;
-            e = Extractor.from_yaml_file("anime_name.yml");
+            html = get(link).text;
+            e = Extractor.from_yaml_file("yml/anime_name.yml");
             name = e.extract(html)["english_name"];
             return name;
         except:
@@ -143,8 +143,8 @@ class manga:
     def get_link(name):
         try:
 
-            name = re.sub(" ", "-", name).lower();
-            name = re.sub("[^0-9a-zA-Z\-]", "", name);
+            name = sub(" ", "-", name).lower();
+            name = sub("[^0-9a-zA-Z\-]", "", name);
 
             link = f"https://www.anime-planet.com/manga/{name}";
             return link;
@@ -167,15 +167,15 @@ class manga:
 
     def get_score_and_ranking(link):
         try:
-            html = requests.get(link).text;
+            html = get(link).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find("section", {"class" : "pure-g entryBar"});
             soup = soup.find_all("div", {"class": "pure-1 md-1-5"});
             score_temp = soup[-2].text;
             rank_temp = soup[-1].text;
-            score = re.search("(?P<score>[0-9.]+) out", score_temp).group("score");
-            rank = re.search("(?P<rank>#[^ ]+)", rank_temp).group("rank");
+            score = search("(?P<score>[0-9.]+) out", score_temp).group("score");
+            rank = search("(?P<rank>#[^ ]+)", rank_temp).group("rank");
             return score, rank;
         except:
             return "NULL","NULL"
@@ -185,7 +185,7 @@ class manga:
 
             reviews = [];
             url = f"{link}/reviews?sort=helpful";
-            html = requests.get(url).text;
+            html = get(url).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find(class_="pure-1 md-4-5 controlBar");
@@ -226,7 +226,7 @@ class manga:
                 for sub_score in sub_scores:
                     score_text = sub_score.text;
 
-                    score = re.search("(?P<score>.*)/10", score_text).group("score");
+                    score = search("(?P<score>.*)/10", score_text).group("score");
 
                     scores.append(score);
 
@@ -239,7 +239,7 @@ class manga:
             review_limit = 3;
             for panel_container in soup:
                 helpful_container = panel_container.find_all("a", {"class": "rated off"})[1];
-                points = re.search("\((?P<points>\d*)\)", helpful_container.text)
+                points = search("\((?P<points>\d*)\)", helpful_container.text)
                 if points != None:
                     points = points.group("points");
                 else:
@@ -258,8 +258,8 @@ class manga:
     def get_name(link):
         try:
 
-            html = requests.get(link).text;
-            e = Extractor.from_yaml_file("anime_name.yml");
+            html = get(link).text;
+            e = Extractor.from_yaml_file("yml/anime_name.yml");
             name = e.extract(html)["english_name"];
             return name;
         except:

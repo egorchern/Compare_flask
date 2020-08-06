@@ -1,6 +1,6 @@
-import requests;
+from requests import get;
 
-import re;
+from re import search, sub;
 
 from bs4 import BeautifulSoup;
 from selectorlib import Extractor;
@@ -22,11 +22,11 @@ class anime:
     def get_link(name):
         try:
 
-            name = re.sub(" ", "+", name).lower();
-            name = re.sub("[^0-9a-zA-Z\+]", "", name);
+            name = sub(" ", "+", name).lower();
+            name = sub("[^0-9a-zA-Z\+]", "", name);
 
             url = f"https://www.imdb.com/find?q={name}&ref_=nv_sr_sm";
-            html = requests.get(url).text;
+            html = get(url).text;
             search_container = BeautifulSoup(html, "lxml").find("div", {"id": "main"});
             search_container = search_container.find("table", {"class": "findList"});
             trs = search_container.find_all("tr");
@@ -39,8 +39,8 @@ class anime:
     def get_score_and_ranking(link):
         try:
 
-            html = requests.get(link).text;
-            e = Extractor.from_yaml_file("imbd_score.yml");
+            html = get(link).text;
+            e = Extractor.from_yaml_file("yml/imbd_score.yml");
             score = e.extract(html)["imbd_score"];
             ranking = "No ranking";
             return score, ranking;
@@ -51,7 +51,7 @@ class anime:
     def get_reviews(link):
         try:
             url = f"{link}reviews?ref_=tt_ql_3";
-            html = requests.get(url).text;
+            html = get(url).text;
             soup = BeautifulSoup(html, "lxml").find("div", {"id": "main"});
             soup = soup.find("div", {"class": "lister-list"});
             review_divs = soup.find_all("div", {"class": "review-container"});
@@ -87,7 +87,7 @@ class anime:
                 further_texts.append(further_text);
                 helpful_container = text_container.find("div", {"class": "actions text-muted"});
                 helpful_text = helpful_container.text;
-                helpful_point = re.search("(?P<helpful_point>\d+) out", helpful_text).group("helpful_point");
+                helpful_point = search("(?P<helpful_point>\d+) out", helpful_text).group("helpful_point");
                 helpful_points.append(helpful_point);
                 image_links.append("https://i.pinimg.com/236x/8b/4a/df/8b4adf13b888cf02c2ef8fa8ff2e8a1f--tower-of-god-androssi-chicas-anime.jpg");
                 counter += 1;

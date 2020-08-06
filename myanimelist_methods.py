@@ -1,6 +1,6 @@
-import requests;
+from requests import get;
 
-import re;
+from re import sub, search;
 
 from bs4 import BeautifulSoup;
 
@@ -29,21 +29,21 @@ class anime:
     def get_info(link):
         try:
 
-            html = requests.get(link).text;
+            html = get(link).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
-            retemp = re.search("alt=\"(?P<name>[^\"]+)\" class=\"lazyload\" data-src=\"(?P<image_link>[^\"]+)\"", temp);
+            retemp = search("alt=\"(?P<name>[^\"]+)\" class=\"lazyload\" data-src=\"(?P<image_link>[^\"]+)\"", temp);
             image_link = retemp.group("image_link");
 
             soup = soup.text;
-            aired = re.search("Aired:\n  (?P<aired>.+)", soup).group("aired");
-            episodes = re.search("Episodes:\n  (?P<episode_number>\w*)", soup).group("episode_number");
-            studios = re.search("Studios:\n(?P<studio_name>\w*)", soup).group("studio_name");
-            genres = re.search("Genres:\n(?P<genres>.+)", soup).group("genres");
+            aired = search("Aired:\n  (?P<aired>.+)", soup).group("aired");
+            episodes = search("Episodes:\n  (?P<episode_number>\w*)", soup).group("episode_number");
+            studios = search("Studios:\n(?P<studio_name>\w*)", soup).group("studio_name");
+            genres = search("Genres:\n(?P<genres>.+)", soup).group("genres");
             genres = genres.split(",");
             for i in range(0, len(genres)):
-                genres[i] = re.sub(" ", "", genres[i]);
+                genres[i] = sub(" ", "", genres[i]);
 
             for i in range(0, len(genres)):
                 string = genres[i];
@@ -64,7 +64,7 @@ class anime:
         try:
 
             url = f"https://myanimelist.net/anime.php?q={animeName}&type=0&score=0&status=0&p=0&r=0&sm=0&sd=0&sy=0&em=0&ed=0&ey=0&c%5B%5D=a&c%5B%5D=b&c%5B%5D=c&c%5B%5D=f&gx=0"
-            response = requests.get(url)
+            response = get(url)
             soup = BeautifulSoup(response.text, 'lxml');
             soup = soup.find("div", {"class": "js-categories-seasonal js-block-list list"});
             trs = soup.find_all("tr");
@@ -101,7 +101,7 @@ class anime:
         try:
 
             reviews = [];
-            response = requests.get(f"{link}/reviews");
+            response = get(f"{link}/reviews");
 
 
             soup = BeautifulSoup(response.text, "lxml");
@@ -128,7 +128,7 @@ class anime:
                 while True:
                     change = False;
                     for j in range(1, len(temp)):
-                        if re.search("^ *$", temp[j]) != None and re.search("^ *$", temp[j - 1]):
+                        if search("^ *$", temp[j]) != None and search("^ *$", temp[j - 1]):
                             temp.pop(j);
                             change = True;
                             break;
@@ -138,7 +138,7 @@ class anime:
                 while True:
                     change = False;
                     for j in range(0, len(temp_scores)):
-                        if re.search("^\d{1,2}$", temp_scores[j]) == None:
+                        if search("^\d{1,2}$", temp_scores[j]) == None:
                             temp_scores.pop(j);
                             change = True;
                             break;
@@ -159,7 +159,7 @@ class anime:
                 container = item_soup.find("table");
                 links = container.find_all("a");
                 temporal = str(links[0]);
-                image_link = re.search(" src=\"(?P<link>[^\"]+)\"", temporal).group("link");
+                image_link = search(" src=\"(?P<link>[^\"]+)\"", temporal).group("link");
                 image_links.append(image_link);
                 temporal = links[1];
                 username = temporal.text;
@@ -195,11 +195,11 @@ class anime:
     def get_score_and_ranking(link):
         try:
 
-            response = requests.get(link);
+            response = get(link);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;
-            temp = re.search("^(?P<rating>[^A-Za-z]+)Ranked #(?P<ranking>[^A-Za-z]+)", stats_div_text);
+            temp = search("^(?P<rating>[^A-Za-z]+)Ranked #(?P<ranking>[^A-Za-z]+)", stats_div_text);
             community_rating = temp.group("rating");
             ranking = temp.group("ranking");
             return community_rating, ranking;
@@ -210,22 +210,22 @@ class manga:
     def get_info(link):
         try:
 
-            html = requests.get(link).text;
+            html = get(link).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
-            retemp = re.search("alt=\"(?P<name>[^\"]+)\" class=\"lazyload\" data-src=\"(?P<image_link>[^\"]+)\"", temp);
+            retemp = search("alt=\"(?P<name>[^\"]+)\" class=\"lazyload\" data-src=\"(?P<image_link>[^\"]+)\"", temp);
             image_link = retemp.group("image_link");
 
             soup = soup.text;
 
-            published = re.search("Published: (?P<published>[^G]+)", soup).group("published");
-            chapters = re.search("Chapters: (?P<chapters>\w*)", soup).group("chapters");
-            authors = re.search("Authors:\n(?P<authors>.+)Serialization", soup).group("authors");
-            genres = re.search("Genres:\n(?P<genres>.+)Authors", soup).group("genres");
+            published = search("Published: (?P<published>[^G]+)", soup).group("published");
+            chapters = search("Chapters: (?P<chapters>\w*)", soup).group("chapters");
+            authors = search("Authors:\n(?P<authors>.+)Serialization", soup).group("authors");
+            genres = search("Genres:\n(?P<genres>.+)Authors", soup).group("genres");
             genres = genres.split(",");
             for i in range(0, len(genres)):
-                genres[i] = re.sub(" ", "", genres[i]);
+                genres[i] = sub(" ", "", genres[i]);
 
             for i in range(0, len(genres)):
                 string = genres[i];
@@ -243,7 +243,7 @@ class manga:
         try:
 
             url = f"https://myanimelist.net/manga.php?q={animeName}&type=0&score=0&status=0&p=0&r=0&sm=0&sd=0&sy=0&em=0&ed=0&ey=0&c%5B%5D=a&c%5B%5D=b&c%5B%5D=c&c%5B%5D=f&gx=0"
-            response = requests.get(url)
+            response = get(url)
             soup = BeautifulSoup(response.text, 'lxml');
             soup = soup.find("div", {"class": "js-categories-seasonal js-block-list list"});
             trs = soup.find_all("tr");
@@ -278,7 +278,7 @@ class manga:
     def get_reviews(link):
         try:
             reviews = [];
-            response = requests.get(f"{link}/reviews");
+            response = get(f"{link}/reviews");
 
             soup = BeautifulSoup(response.text, "lxml");
             temp = soup.find_all(class_="spaceit textReadability word-break pt8 mt8");
@@ -304,7 +304,7 @@ class manga:
                 while True:
                     change = False;
                     for j in range(1, len(temp)):
-                        if re.search("^ *$", temp[j]) != None and re.search("^ *$", temp[j - 1]):
+                        if search("^ *$", temp[j]) != None and search("^ *$", temp[j - 1]):
                             temp.pop(j);
                             change = True;
                             break;
@@ -316,7 +316,7 @@ class manga:
                 while True:
                     change = False;
                     for j in range(0, len(temp_scores)):
-                        if re.search("^\d{1,2}$", temp_scores[j]) == None:
+                        if search("^\d{1,2}$", temp_scores[j]) == None:
                             temp_scores.pop(j);
                             change = True;
                             break;
@@ -337,7 +337,7 @@ class manga:
                 container = item_soup.find("table");
                 links = container.find_all("a");
                 temporal = str(links[0]);
-                image_link = re.search(" src=\"(?P<link>[^\"]+)\"", temporal).group("link");
+                image_link = search(" src=\"(?P<link>[^\"]+)\"", temporal).group("link");
                 image_links.append(image_link);
                 temporal = links[1];
                 username = temporal.text;
@@ -372,11 +372,11 @@ class manga:
     def get_score_and_ranking(link):
         try:
 
-            response = requests.get(link);
+            response = get(link);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;
-            temp = re.search("^(?P<rating>[^A-Za-z]+)Ranked #(?P<ranking>[^A-Za-z]+)", stats_div_text);
+            temp = search("^(?P<rating>[^A-Za-z]+)Ranked #(?P<ranking>[^A-Za-z]+)", stats_div_text);
             community_rating = temp.group("rating");
             ranking = temp.group("ranking");
             return community_rating, ranking;

@@ -1,6 +1,6 @@
-import requests;
+from requests import get;
 
-import re;
+from re import search, sub;
 
 from bs4 import BeautifulSoup;
 from selectorlib import Extractor;
@@ -8,20 +8,20 @@ from selectorlib import Extractor;
 class manga:
     def get_link(name):
         try:
-            name = re.sub(" ", "_", name);
+            name = sub(" ", "_", name);
 
             url = f"https://mangakakalot.com/search/story/{name}";
 
-            html = requests.get(url).text;
-            e = Extractor.from_yaml_file("manganelo_link.yml");
+            html = get(url).text;
+            e = Extractor.from_yaml_file("yml/manganelo_link.yml");
             link = e.extract(html)["link"];
             return link;
         except:
             return "NULL";
     def get_score_and_ranking(link):
         try:
-            e = Extractor.from_yaml_file("manganelo_score.yml");
-            html = requests.get(link).text;
+            e = Extractor.from_yaml_file("yml/manganelo_score.yml");
+            html = get(link).text;
             score = e.extract(html)["score"];
             return score, "No ranking";
 
