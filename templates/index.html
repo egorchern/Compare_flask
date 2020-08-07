@@ -82,7 +82,9 @@
                     <img src="{{url_for('static', filename='search_icon.png')}}" style="width: 5%; min-width: 28px; height: 100%; position:absolute; right:8px; top:0; object-fit: contain; cursor:pointer" onclick="process_search_submit()">
                     <input type="text" class="form-control" onkeypress="handle(event)" id="media_name" name="media_name">
                 </div>
-                <small style="width:85%; margin-left:auto; margin-right: auto; margin-top:1.2vh;" class="form-text text-muted">Please enter the name in english. For example instead of: 'Toaru Kagaku no Railgun T' enter: 'A Certain Scientific Railgun T'</small>
+                <small style="width:85%; margin-left:auto; margin-right: auto; margin-top:1.2vh;" class="form-text text-muted">
+                    The search function tries to guess the best match for your query. You can enter in romaji or english. If you don't get the anime/manga you wanted, try putting full english  name.
+                </small>
             </div>
 
         </div>

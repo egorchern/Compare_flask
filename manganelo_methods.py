@@ -12,7 +12,7 @@ class manga:
 
             url = f"https://mangakakalot.com/search/story/{name}";
 
-            html = get(url, timeout=5).text;
+            html = get(url, timeout=8).text;
             e = Extractor.from_yaml_file("yml/manganelo_link.yml");
             link = e.extract(html)["link"];
             return link;
@@ -21,7 +21,7 @@ class manga:
     def get_score_and_ranking(link):
         try:
             e = Extractor.from_yaml_file("yml/manganelo_score.yml");
-            html = get(link, timeout=5).text;
+            html = get(link, timeout=8).text;
             score = e.extract(html)["score"];
             return score, "No ranking";
 

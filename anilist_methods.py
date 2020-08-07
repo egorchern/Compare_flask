@@ -14,7 +14,7 @@ class anime:
                     Media(search: $search, format_not:MANGA){
                         id
                         
-                        }
+                    }
                 }
                 '''
             variables = {
@@ -25,7 +25,7 @@ class anime:
             media = response["data"]["Media"];
             id_ = media["id"];
             url = f"https://anilist.co/anime/{id_}";
-            html = get(url, timeout=5).text;
+            html = get(url, timeout=8).text;
             e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
             data = e.extract(html);
             score = sub("%", "", data["score"]);
@@ -34,6 +34,36 @@ class anime:
         except:
             return "NULL","NULL";
 
+
+    def get_closest_english_name_and_mal_id(name):
+        try:
+            query = '''
+                query($search: String){
+                    Media(search: $search, format_not:MANGA){
+                        idMal
+                        title{
+                            romaji
+                            english
+                        }
+                    }
+                }
+            '''
+            variables = {
+                "search": name
+            };
+            url = 'https://graphql.anilist.co';
+            response = post(url, json={'query': query, "variables": variables}).json();
+            media = response["data"]["Media"];
+            english_name = media["title"]["english"];
+            romaji_name = media["title"]["romaji"];
+            idMal = str(media["idMal"]);
+            if english_name != None:
+
+                return english_name, idMal;
+            else:
+                return romaji_name, idMal;
+        except:
+            return name, "NULL";
 
 class manga:
     def get_score_and_ranking(name):
@@ -55,7 +85,7 @@ class manga:
             media = response["data"]["Media"];
             id_ = media["id"];
             url = f"https://anilist.co/manga/{id_}";
-            html = get(url, timeout=5).text;
+            html = get(url, timeout=8).text;
             e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
             data = e.extract(html);
             score = sub("%", "", data["score"]);
@@ -65,8 +95,37 @@ class manga:
             return "NULL", "NULL";
 
 
+    def get_closest_english_name_and_mal_id(name):
+        try:
+            query = '''
+                query($search: String){
+                    Media(search: $search, format_in:[MANGA]){
+                        idMal
+                        title{
+                            romaji
+                            english
+                        }
+                    }
+                }
+            '''
+            variables = {
+                "search": name
+            };
+            url = 'https://graphql.anilist.co';
+            response = post(url, json={'query': query, "variables": variables}).json();
+            media = response["data"]["Media"];
+            english_name = media["title"]["english"];
+            romaji_name = media["title"]["romaji"];
+            idMal = str(media["idMal"]);
+            if english_name != None:
+
+                return english_name, idMal;
+            else:
+                return romaji_name, idMal;
+        except:
+            return name, "NULL";
+
 
 if __name__ == "__main__":
-    score, ranking = manga.get_score_and_ranking("grand blue");
-    print("fa");
+   print(anime.get_closest_english_name_and_mal_id("one piece"));
 

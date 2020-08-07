@@ -54,9 +54,10 @@ def index():
 def anime():
 
     anime_name = request.form["media_name"];
+    anime_name, idMal = anilist_methods.anime.get_closest_english_name_and_mal_id(anime_name);
 
     def mal():
-        link = myanimelist_methods.anime.get_link(anime_name);
+        link = myanimelist_methods.anime.get_link(idMal);
         reviews_list = myanimelist_methods.anime.get_reviews(link);
         average_rating, ranking = myanimelist_methods.anime.get_score_and_ranking(link);
         mal = myanimelist(reviews_list, average_rating, ranking);
@@ -81,8 +82,10 @@ def anime():
         return anl;
 
 
-    info = myanimelist_methods.anime.get_info(myanimelist_methods.anime.get_link(anime_name))
-    info.name = anime_planet_methods.anime.get_name(anime_planet_methods.anime.get_link(anime_name));
+    link = myanimelist_methods.anime.get_link(idMal);
+    info = myanimelist_methods.anime.get_info(link);
+
+    info.name = anime_name;
     mal = mal();
     pl = anime_planet();
     imb = imd();
@@ -94,9 +97,10 @@ def anime():
 @app.route("/manga", methods=["POST"])
 def manga():
     manga_name = request.form["media_name"];
-
+    manga_name, idMal = anilist_methods.manga.get_closest_english_name_and_mal_id(manga_name);
+    print(idMal);
     def mal():
-        link = myanimelist_methods.manga.get_link(manga_name);
+        link = myanimelist_methods.manga.get_link(idMal);
         reviews_list = myanimelist_methods.manga.get_reviews(link);
         average_rating, ranking = myanimelist_methods.manga.get_score_and_ranking(link);
         mal = myanimelist(reviews_list, average_rating, ranking);
@@ -121,8 +125,9 @@ def manga():
         return anl;
 
     anl = anilis();
-    info = myanimelist_methods.manga.get_info(myanimelist_methods.manga.get_link(manga_name))
-    info.name = anime_planet_methods.manga.get_name(anime_planet_methods.manga.get_link(manga_name));
+    link = myanimelist_methods.manga.get_link(idMal);
+    info = myanimelist_methods.manga.get_info(link);
+    info.name = manga_name;
     mal = mal();
     pl = anime_planet();
     mn = manganel();
@@ -133,3 +138,4 @@ def manga():
 def book():
     return "not done";
 
+#TODO debug reviews for myanimelist: anime: one piece

@@ -29,7 +29,7 @@ class anime:
     def get_info(link):
         try:
 
-            html = get(link, timeout=5).text;
+            html = get(link, timeout=8).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
@@ -59,7 +59,7 @@ class anime:
 
 
 
-
+    '''
     def get_link(animeName, printing=False):#
         try:
 
@@ -71,37 +71,19 @@ class anime:
             second = trs[1];
             link = second.find("a")["href"];
             return link;
-            """
-            temp = soup.find(class_ = "js-scrollfix-bottom-rel");
-
-            vat = temp.find_all("a", class_="hoverinfo_trigger fw-b fl-l");
-
-            if(printing == True):
-                possible_animes = [];
-                for item in vat:
-                    item = str(item);
-
-                    name = re.search(">(?P<name>.+)<", item).group("name");
-                    link = re.search("href=\"(?P<link>[^\"]+)", item).group("link")
-
-                    possible_animes.append(f"{name}   {link}");
-
-                print(f"Possible animes for query ({animeName}):");
-                print('\n'.join(possible_animes));
-            else:
-                candidate = str(vat[0]);
-                link = re.search("href=\"(?P<link>[^\"]+)", candidate).group("link");
-                return link
-            """
+            
         except:
             return "NULL";
-
+    '''
+    def get_link(idMal):
+        url = f"https://myanimelist.net/anime/{idMal}/p";
+        return url;
 
     def get_reviews(link):
         try:
 
             reviews = [];
-            response = get(f"{link}/reviews", timeout=5);
+            response = get(f"{link}/reviews", timeout=8);
 
 
             soup = BeautifulSoup(response.text, "lxml");
@@ -195,7 +177,7 @@ class anime:
     def get_score_and_ranking(link):
         try:
 
-            response = get(link, timeout=5);
+            response = get(link, timeout=8);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;
@@ -210,7 +192,7 @@ class manga:
     def get_info(link):
         try:
 
-            html = get(link, timeout=5).text;
+            html = get(link, timeout=8).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
@@ -238,7 +220,7 @@ class manga:
         except:
             inf = info("NULL", "NULL", "NULL", "NULL", "NULL", "NULL");
         return inf;
-
+    '''
     def get_link(animeName, printing=False):#
         try:
 
@@ -250,35 +232,19 @@ class manga:
             second = trs[1];
             link = second.find("a")["href"];
             return link;
-            """
-            temp = soup.find(class_ = "js-scrollfix-bottom-rel");
-
-            vat = temp.find_all("a", class_="hoverinfo_trigger fw-b fl-l");
-
-            if(printing == True):
-                possible_animes = [];
-                for item in vat:
-                    item = str(item);
-
-                    name = re.search(">(?P<name>.+)<", item).group("name");
-                    link = re.search("href=\"(?P<link>[^\"]+)", item).group("link")
-
-                    possible_animes.append(f"{name}   {link}");
-
-                print(f"Possible animes for query ({animeName}):");
-                print('\n'.join(possible_animes));
-            else:
-                candidate = str(vat[0]);
-                link = re.search("href=\"(?P<link>[^\"]+)", candidate).group("link");
-                return link
-            """
+            
         except:
             return "NULL";
+    '''
+    def get_link(idMal):
+        url = f"https://myanimelist.net/manga/{idMal}/p";
+        return url;
+
 
     def get_reviews(link):
         try:
             reviews = [];
-            response = get(f"{link}/reviews", timeout=5);
+            response = get(f"{link}/reviews", timeout=8);
 
             soup = BeautifulSoup(response.text, "lxml");
             temp = soup.find_all(class_="spaceit textReadability word-break pt8 mt8");
@@ -372,7 +338,7 @@ class manga:
     def get_score_and_ranking(link):
         try:
 
-            response = get(link, timeout=5);
+            response = get(link, timeout=8);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;
@@ -387,6 +353,6 @@ class manga:
 
 if __name__ == "__main__":
 
-    link = anime.get_link("oreimo");
-    print(link);
+    link = manga.get_link("13/m");
+    reviews = manga.get_reviews(link);
 

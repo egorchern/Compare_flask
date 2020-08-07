@@ -32,7 +32,7 @@
             }
             #query_form{
                 text-align: center;
-                width: 60%;
+                width: 65%;
                 max-width:700px;
                 background-color: white;
                 box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
@@ -53,12 +53,13 @@
             .form-control{
                 border-radius: 1rem!important;
             }
-            @media (max-width:870px){
-                #query_form{
-                    width: 75%;
-                }
-            }
+            
             .chosen{
                 cursor:pointer;
                 box-shadow:  0px 0px 6px 5px hsl(216, 100%, 78%);
             }
+@media (max-width: 650px){
+    #query_form{
+        width:81.5%;
+    }
+}

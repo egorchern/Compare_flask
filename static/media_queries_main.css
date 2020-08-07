@@ -17,7 +17,8 @@
         max-width:570px;
     }
     #anime_info_container{
-        width: 45%;
+        min-width:500px;
+        width: 60%;
         grid-template-columns: 40fr 60fr;
     }
     #anime_image_container{
@@ -33,6 +34,7 @@
 }
 
 @media (min-width: 650.001px) and (max-width: 1000px){
+    
     .item_flexbox{
         width: 45%;
     }

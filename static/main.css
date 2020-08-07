@@ -109,7 +109,8 @@
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
             border: 1.5px solid rgba(0, 0, 0, 0.125);
             border-radius: 0.45rem;
-            max-width: 675px;
+            
+            max-width: 625px;
             background-color: white;
             padding:20px;
             display:grid;

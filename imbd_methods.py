@@ -26,7 +26,7 @@ class anime:
             name = sub("[^0-9a-zA-Z\+]", "", name);
 
             url = f"https://www.imdb.com/find?q={name}&ref_=nv_sr_sm";
-            html = get(url, timeout=5).text;
+            html = get(url, timeout=8).text;
             search_container = BeautifulSoup(html, "lxml").find("div", {"id": "main"});
             search_container = search_container.find("table", {"class": "findList"});
             trs = search_container.find_all("tr");
@@ -39,7 +39,7 @@ class anime:
     def get_score_and_ranking(link):
         try:
 
-            html = get(link, timeout=5).text;
+            html = get(link, timeout=8).text;
             e = Extractor.from_yaml_file("yml/imbd_score.yml");
             score = e.extract(html)["imbd_score"];
             ranking = "No ranking";
@@ -51,7 +51,7 @@ class anime:
     def get_reviews(link):
         try:
             url = f"{link}reviews?ref_=tt_ql_3";
-            html = get(url, timeout=5).text;
+            html = get(url, timeout=8).text;
             soup = BeautifulSoup(html, "lxml").find("div", {"id": "main"});
             soup = soup.find("div", {"class": "lister-list"});
             review_divs = soup.find_all("div", {"class": "review-container"});
