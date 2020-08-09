@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Comparer</title>
+    <title>Query Results</title>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108190186-4"></script>
@@ -18,28 +18,33 @@
         gtag('config', 'UA-108190186-4');
 
     </script>
+
     <script>
         function process_search_submit() {
             if (chosenId === "") {
                 alert("Please choose a category");
             } else {
                 var text = $("#media_name").val();
-				console.log(typeof(text));
-				
+                console.log(typeof(text));
+
                 if (text === "") {
                     alert("Please enter a name of anime/manga/book you want to search");
                 } else {
                     var category = chosenId;
                     if (category === "anime") {
-						
-						{{text}}
+
+                        {
+                            {
+                                text
+                            }
+                        }
                         $('#query_form').attr("action", "{{url_for('anime', name=text)}}");
                     } else if (category === "manga") {
                         $('#query_form').attr("action", `{{url_for('manga')}}`);
                     } else if (category === "book") {
                         $('#query_form').attr("action", `{{url_for('book')}}`);
-					}
-                   
+                    }
+
                     $('#query_form').submit();
 
                 }
@@ -47,15 +52,14 @@
         }
 
     </script>
-
     <meta charset="utf-8" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <link rel=stylesheet href="{{url_for('static', filename='main.css')}}">
+    <link rel=stylesheet href="{{url_for('static', filename='media_queries_main.css')}}">
     <link rel=stylesheet href="{{url_for('static', filename='search_form.css')}}">
-    <!--<link rel=stylesheet href="{{url_for('static', filename='media_queries_main.css')}}">-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="{{url_for('static', filename='main.js')}}"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='apple-touch-icon.png')}}">
@@ -63,9 +67,12 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='favicon-16x16.png')}}">
     <link rel="manifest" href="{{url_for('static', filename='site.webmanifest')}}">
 
+
 </head>
 
 <body>
+
+
     <form id="query_form" method="post" name="query_form">
         <div class="form-group">
             <label for="">What do you want to look up?</label>
@@ -96,6 +103,25 @@
 
         </div>
     </form>
+
+    <div class="main_container">
+        <div class="item_flexbox">
+            <p style="font-size:calc(18px + 1.4vw)!important; text-align: center; width:100%">Goodreads</p>
+            <div class="review">
+
+                <div id="goodreads-widget">
+
+                    <iframe id="the_iframe" src="https://www.goodreads.com/api/reviews_widget_iframe?did=75589&format=html&header_text={{book_name}}&isbn={{isbn}}&links=660&review_back=fff&stars=000&text=000" frameborder="0"></iframe>
+                    <!--<div id="gr_footer">
+                        <a class="gr_branding" target="_blank" rel="nofollow noopener noreferrer" href="https://www.goodreads.com/book/show/2956.The_Adventures_of_Huckleberry_Finn?utm_medium=api&utm_source=reviews_widget">Reviews from Goodreads.com</a>
+                    </div>
+					-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>

@@ -85,7 +85,16 @@
                     <img src="{{url_for('static', filename='search_icon.png')}}" style="width: 5%; min-width: 28px; height: 100%; position:absolute; right:8px; top:0; object-fit: contain; cursor:pointer" onclick="process_search_submit()">
                     <input type="text" class="form-control" onkeypress="handle(event)" id="media_name" name="media_name">
                 </div>
-                <small style="width:85%; margin-left:auto; margin-right: auto; margin-top:1.2vh;" class="form-text text-muted">The search function tries to guess the best match for your query. You can enter in romaji or english. If you don't get the anime/manga you wanted, try putting full english name.</small>
+                <div style="width:85%; margin-left:auto; margin-right: auto; margin-top:1.2vh; text-align: center">
+                    <p class="form-text text-muted" style="margin-bottom: 0.5rem">
+                    Anime/Manga: Search function tries to get the closest match to your query. Try entering a more precise anime/manga name if wrong anime/manga is displayed. You can enter in either romaji or english
+                    
+                    </p>
+                    <p class="form-text text-muted" style="margin-bottom: 0.5rem">
+                        Book: Search function only works with isbn-10. You can find isbn of a book on this website: <a href="https://isbnsearch.org/" target="_blank">isbn finder</a>
+                    </p>
+                </div>
+                
             </div>
 
         </div>
@@ -95,17 +104,17 @@
             <img src={{info.image_link}}>
 
         </div>
-        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+        <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
             <p>Name: {{info.name}}</p>
 
         </div>
-        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+        <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
             <p>Chapters: {{info.episodes}}</p>
         </div>
-        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+        <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
             <p>Published: {{info.aired}}</p>
         </div>
-        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+        <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
             <p>Authors: {{info.studios}}</p>
         </div>
         <div id='genres' class="align_perfectly">

@@ -3,8 +3,9 @@ import imbd_methods;
 import manganelo_methods;
 import anilist_methods;
 from flask import Flask, render_template, request;
-from threading import Thread, Event;
+
 import anime_planet_methods;
+from re import sub;
 
 
 
@@ -93,7 +94,6 @@ def anime():
 
     return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info, imbd=imb, anilist=anl);
 
-
 @app.route("/manga", methods=["POST"])
 def manga():
     manga_name = request.form["media_name"];
@@ -136,6 +136,8 @@ def manga():
 
 @app.route("/book", methods=["POST"])
 def book():
-    return "not done";
+    isbn = request.form["media_name"];
 
-#TODO debug reviews for myanimelist: anime: one piece
+    return render_template("book_query_results.html", isbn=isbn);
+
+

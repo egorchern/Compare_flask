@@ -9,60 +9,41 @@
 
 <body>
     <style>
-        #goodreads-widget {
-            font-family: georgia, serif;
-            padding: 18px 0;
-            width: 30%;
-            height: 500px;
-        }
-
-        #goodreads-widget h1 {
-            font-weight: normal;
-            font-size: 16px;
-            border-bottom: 1px solid #BBB596;
-            margin-bottom: 0;
-        }
-
-        #goodreads-widget a {
-            text-decoration: none;
-            color: #660;
-        }
-
-        iframe {
-            background-color: #fff;
-            width:100%;
-            height: 100%;
-        }
-
-        #goodreads-widget a:hover {
-            text-decoration: underline;
-        }
-
-        #goodreads-widget a:active {
-            color: #660;
-        }
-
-        #gr_footer {
-            width: 100%;
-            border-top: 1px solid #BBB596;
-            text-align: right;
-        }
-
-        #goodreads-widget .gr_branding {
-            color: #382110;
-            font-size: 11px;
-            text-decoration: none;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
+        
 
     </style>
-    <div id="goodreads-widget">
+    <div id="goodreads-widget"> 
         
-        <iframe id="the_iframe" src="https://www.goodreads.com/api/reviews_widget_iframe?did=75589&format=html&header_text=Goodreads+reviews+for+The+Adventures+of+Huckleberry+Finn&isbn=0451524934&links=660&review_back=fff&stars=000&text=000"  frameborder="0"></iframe>
+        <iframe id="the_iframe" src="https://www.goodreads.com/api/reviews_widget_iframe?did=75589&format=html&header_text={{book_name}}&isbn={{isbn}}&links=660&review_back=fff&stars=000&text=000"  frameborder="0"></iframe>
         <div id="gr_footer">
             <a class="gr_branding" target="_blank" rel="nofollow noopener noreferrer" href="https://www.goodreads.com/book/show/2956.The_Adventures_of_Huckleberry_Finn?utm_medium=api&utm_source=reviews_widget">Reviews from Goodreads.com</a>
         </div>
     </div>
+    <!--
+    <div id="anime_info_container">
+        <div id="anime_image_container" class="align_perfectly">
+            <img src={{info.image_link}}>
+
+        </div>
+        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+            <p>Name: {{info.name}}</p>
+
+        </div>
+        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+            <p>Chapters: {{info.episodes}}</p>
+        </div>
+        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+            <p>Published: {{info.aired}}</p>
+        </div>
+        <div class="align_perfectly" style="border-bottom: 2px solid hsl(210, 14%, 89%);">
+            <p>Authors: {{info.studios}}</p>
+        </div>
+        <div id='genres' class="align_perfectly">
+            <p>Genres: {{info.genres}}</p>
+        </div>
+
+    </div>
+    -->
 </body>
 
 </html>
