@@ -4,6 +4,8 @@ from re import sub, search;
 
 from bs4 import BeautifulSoup;
 
+timeout_amount = 5;
+
 
 class info:
     def __init__(self, image_link, name, episodes, aired, studios, genres):
@@ -29,7 +31,7 @@ class anime:
     def get_info(link):
         try:
 
-            html = get(link, timeout=8).text;
+            html = get(link, timeouttimeout=timeout_amount).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
@@ -83,7 +85,7 @@ class anime:
         try:
 
             reviews = [];
-            response = get(f"{link}/reviews", timeout=8);
+            response = get(f"{link}/reviews", timeout=timeout_amount);
 
 
             soup = BeautifulSoup(response.text, "lxml");
@@ -177,7 +179,7 @@ class anime:
     def get_score_and_ranking(link):
         try:
 
-            response = get(link, timeout=8);
+            response = get(link, timeout=timeout_amount);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;
@@ -192,7 +194,7 @@ class manga:
     def get_info(link):
         try:
 
-            html = get(link, timeout=8).text;
+            html = get(link, timeout=timeout_amount).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
@@ -244,7 +246,7 @@ class manga:
     def get_reviews(link):
         try:
             reviews = [];
-            response = get(f"{link}/reviews", timeout=8);
+            response = get(f"{link}/reviews", timeout=timeout_amount);
 
             soup = BeautifulSoup(response.text, "lxml");
             temp = soup.find_all(class_="spaceit textReadability word-break pt8 mt8");
@@ -338,7 +340,7 @@ class manga:
     def get_score_and_ranking(link):
         try:
 
-            response = get(link, timeout=8);
+            response = get(link, timeout=timeout_amount);
             soup = BeautifulSoup(response.text, "lxml");
             stats_div = soup.find(class_="stats-block po-r clearfix");
             stats_div_text = stats_div.text;

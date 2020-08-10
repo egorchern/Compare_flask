@@ -25,7 +25,7 @@
                 alert("Please choose a category");
             } else {
                 var text = $("#media_name").val();
-				console.log(typeof(text));
+				
 				
                 if (text === "") {
                     alert("Please enter a name of anime/manga/book you want to search");
@@ -33,12 +33,15 @@
                     var category = chosenId;
                     if (category === "anime") {
 						
-						{{text}}
-                        $('#query_form').attr("action", "{{url_for('anime', name=text)}}");
+						link = `/anime/${text}`;
+                        console.log(link);
+                        $('#query_form').attr("action", link);
                     } else if (category === "manga") {
-                        $('#query_form').attr("action", `{{url_for('manga')}}`);
+                        link = `/manga/${text}`;
+                        $('#query_form').attr("action", link);
                     } else if (category === "book") {
-                        $('#query_form').attr("action", `{{url_for('book')}}`);
+                        link = `/book/${text}`;
+                        $('#query_form').attr("action", link );
 					}
                    
                     $('#query_form').submit();

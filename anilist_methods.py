@@ -5,6 +5,10 @@ from re import sub;
 from bs4 import BeautifulSoup;
 from selectorlib import Extractor;
 
+
+
+timeout_amount = 5;
+
 class anime:
     def get_score_and_ranking(name):
         try:
@@ -25,7 +29,7 @@ class anime:
             media = response["data"]["Media"];
             id_ = media["id"];
             url = f"https://anilist.co/anime/{id_}";
-            html = get(url, timeout=8).text;
+            html = get(url, timeout=timeout_amount).text;
             e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
             data = e.extract(html);
             score = sub("%", "", data["score"]);
@@ -85,7 +89,7 @@ class manga:
             media = response["data"]["Media"];
             id_ = media["id"];
             url = f"https://anilist.co/manga/{id_}";
-            html = get(url, timeout=8).text;
+            html = get(url, timeout=timeout_amount).text;
             e = Extractor.from_yaml_file("yml/anilist_score_and_ranking.yml");
             data = e.extract(html);
             score = sub("%", "", data["score"]);

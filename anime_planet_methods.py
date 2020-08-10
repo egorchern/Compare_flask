@@ -5,6 +5,10 @@ from re import sub, search;
 from bs4 import BeautifulSoup;
 from selectorlib import Extractor;
 
+
+timeout_amount = 5;
+
+
 class review:
     def __init__(self, preview_text, further_text, scores, username, image_link, helpful_points):
         self.preview_text = preview_text;
@@ -42,7 +46,7 @@ class anime:
 
     def get_score_and_ranking(link):
         try:
-            html = get(link, timeout=8).text;
+            html = get(link, timeout=timeout_amount).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find("section", {"class" : "pure-g entryBar"});
@@ -60,7 +64,7 @@ class anime:
 
             reviews = [];
             url = f"{link}/reviews?sort=helpful";
-            html = get(url, timeout=8).text;
+            html = get(url, timeout=timeout_amount).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find(class_="pure-1 md-4-5 controlBar");
@@ -132,7 +136,7 @@ class anime:
     def get_name(link):
         try:
 
-            html = get(link, timeout=8).text;
+            html = get(link, timeout=timeout_amount).text;
             e = Extractor.from_yaml_file("yml/anime_name.yml");
             name = e.extract(html)["english_name"];
             return name;
@@ -167,7 +171,7 @@ class manga:
 
     def get_score_and_ranking(link):
         try:
-            html = get(link, timeout=8).text;
+            html = get(link, timeout=timeout_amount).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find("section", {"class" : "pure-g entryBar"});
@@ -185,7 +189,7 @@ class manga:
 
             reviews = [];
             url = f"{link}/reviews?sort=helpful";
-            html = get(url, timeout=8).text;
+            html = get(url, timeout=timeout_amount).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find("div", {"id": "siteContainer"});
             soup = soup.find(class_="pure-1 md-4-5 controlBar");
@@ -258,7 +262,7 @@ class manga:
     def get_name(link):
         try:
 
-            html = get(link, timeout=8).text;
+            html = get(link, timeout=timeout_amount).text;
             e = Extractor.from_yaml_file("yml/anime_name.yml");
             name = e.extract(html)["english_name"];
             return name;

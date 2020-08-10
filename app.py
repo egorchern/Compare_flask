@@ -2,7 +2,7 @@ import myanimelist_methods;
 import imbd_methods;
 import manganelo_methods;
 import anilist_methods;
-from flask import Flask, render_template, request;
+from flask import Flask, render_template, request, redirect;
 
 import anime_planet_methods;
 from re import sub;
@@ -51,12 +51,14 @@ def index():
     return render_template("index.html");
 
 
-@app.route("/anime", methods=["POST"])
-def anime():
+@app.route("/anime/<name>", methods=["POST", "GET"])
+def anime(name):
 
-    anime_name = request.form["media_name"];
-    anime_name, idMal = anilist_methods.anime.get_closest_english_name_and_mal_id(anime_name);
 
+    anime_name, idMal = anilist_methods.anime.get_closest_english_name_and_mal_id(name);
+
+    if anime_name != name:
+        return redirect(f"/anime/{anime_name}");
     def mal():
         link = myanimelist_methods.anime.get_link(idMal);
         reviews_list = myanimelist_methods.anime.get_reviews(link);
@@ -94,11 +96,12 @@ def anime():
 
     return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info, imbd=imb, anilist=anl);
 
-@app.route("/manga", methods=["POST"])
-def manga():
-    manga_name = request.form["media_name"];
-    manga_name, idMal = anilist_methods.manga.get_closest_english_name_and_mal_id(manga_name);
-    print(idMal);
+@app.route("/manga/<name>", methods=["POST", "GET"])
+def manga(name):
+
+    manga_name, idMal = anilist_methods.manga.get_closest_english_name_and_mal_id(name);
+    if manga_name != name:
+        return redirect(f"/manga/{manga_name}");
     def mal():
         link = myanimelist_methods.manga.get_link(idMal);
         reviews_list = myanimelist_methods.manga.get_reviews(link);
@@ -134,9 +137,9 @@ def manga():
 
     return render_template("manga_query_results.html", mal=mal, anime_planet=pl, manganelo=mn, info=info, anilist=anl);
 
-@app.route("/book", methods=["POST"])
-def book():
-    isbn = request.form["media_name"];
+@app.route("/book/<name>", methods=["POST", "GET"])
+def book(name):
+    isbn = name;
 
     return render_template("book_query_results.html", isbn=isbn);
 
