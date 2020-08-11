@@ -28,6 +28,8 @@ class review:
 
 class anime:
 
+
+
     def get_info(link):
         try:
 
@@ -62,6 +64,7 @@ class anime:
 
 
 
+
     '''
     def get_link(animeName, printing=False):#
         try:
@@ -80,6 +83,7 @@ class anime:
     '''
     def get_link(idMal):
         url = f"https://myanimelist.net/anime/{idMal}/p";
+
         return url;
 
     def get_reviews(link):

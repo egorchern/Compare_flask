@@ -1,0 +1,8 @@
+popularity:
+    css: 'tr.wslcontent td:nth-of-type(3) a'
+    xpath: null
+    type: Text
+score:
+    css: span.dark_hint
+    xpath: null
+    type: Text
