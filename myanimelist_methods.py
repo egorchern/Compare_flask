@@ -31,7 +31,7 @@ class anime:
     def get_info(link):
         try:
 
-            html = get(link, timeouttimeout=timeout_amount).text;
+            html = get(link, timeout=timeout_amount).text;
             soup = BeautifulSoup(html, "lxml");
             soup = soup.find(class_="borderClass");
             temp = str(soup.find("img"));
@@ -41,7 +41,8 @@ class anime:
             soup = soup.text;
             aired = search("Aired:\n  (?P<aired>.+)", soup).group("aired");
             episodes = search("Episodes:\n  (?P<episode_number>\w*)", soup).group("episode_number");
-            studios = search("Studios:\n(?P<studio_name>\w*)", soup).group("studio_name");
+            studios = search("Studios:\n(?P<studio_name>[^\n]+)", soup).group("studio_name");
+            studios = studios[0:len(studios) - 1];
             genres = search("Genres:\n(?P<genres>.+)", soup).group("genres");
             genres = genres.split(",");
             for i in range(0, len(genres)):
@@ -355,6 +356,6 @@ class manga:
 
 if __name__ == "__main__":
 
-    link = manga.get_link("13/m");
-    reviews = manga.get_reviews(link);
-
+    link = anime.get_link("38481");
+    info = anime.get_info(link);
+    print("fa");
