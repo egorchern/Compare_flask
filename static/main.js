@@ -16,8 +16,9 @@ function activate(id) {
         }
         setTimeout(function () {
             toggle_hover(id)
-        }, 700);
+        }, 400);
     } else {
+        
         var others = false;
         for (var i = 0; i < objs.length; i++) {
             var current = $(objs[i]);
@@ -40,7 +41,11 @@ function activate(id) {
 }
 
 function toggle_hover(id) {
-    $(`#${id}`).addClass('hovers');
+    
+    if(chosenId === ""){
+        $(`#${id}`).addClass('hovers');
+    }
+    
 }
 
 function handle(e) {

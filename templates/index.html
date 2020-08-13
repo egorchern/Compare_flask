@@ -74,15 +74,19 @@
             <label for="">What do you want to look up?</label>
             <div id="type_container">
                 <div class="media_containers hovers" id="anime" onclick="activate(this.id)">
-                    Anime
+                    <span class="unselectable">Anime</span>
                 </div>
-                <div class="media_containers hovers" id="manga" onclick="activate(this.id)">Manga</div>
-                <div class="media_containers hovers" id="book" onclick="activate(this.id)">Book</div>
+                <div class="media_containers hovers" id="manga" onclick="activate(this.id)">
+                    <span class="unselectable">Manga</span>
+                </div>
+                <div class="media_containers hovers" id="book" onclick="activate(this.id)">
+                    <span class="unselectable">Book</span>
+                </div>
             </div>
             <div class="form-group">
                 <div class="search_bar_container">
 
-                    <img src="{{url_for('static', filename='search_icon.png')}}" style="width: 5%; min-width: 28px; height: 100%; position:absolute; right:8px; top:0; object-fit: contain; cursor:pointer" onclick="process_search_submit()">
+                    <img src="{{url_for('static', filename='search_icon.png')}}" style="width: 5%; min-width: 28px; height: 100%; position:absolute; right:8px; top:0; object-fit: contain; cursor:pointer" onclick="process_search_submit()" class="unselectable">
                     <input type="text" class="form-control" onkeypress="handle(event)" id="media_name" name="media_name">
                 </div>
                 <div style="width:85%; margin-left:auto; margin-right: auto; margin-top:1.2vh; text-align: center">
