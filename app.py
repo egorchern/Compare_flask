@@ -43,7 +43,7 @@ class anilist:
 
 
 app = Flask(__name__);
-app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+
 redirect_counter = 0;
 
 @app.route("/")
@@ -61,6 +61,7 @@ def anime(name):
         redirect_counter = 1;
         return redirect(f"/anime/{anime_name}");
     redirect_counter = 0;
+    print(anime_name, idMal);
     def mal():
         link = myanimelist_methods.anime.get_link(idMal);
         reviews_list = myanimelist_methods.anime.get_reviews(link);
@@ -107,6 +108,8 @@ def manga(name):
     if redirect_counter == 0:
         redirect_counter = 1;
         return redirect(f"/manga/{manga_name}");
+    redirect_counter = 0;
+    print(manga_name, idMal);
     def mal():
         link = myanimelist_methods.manga.get_link(idMal);
         reviews_list = myanimelist_methods.manga.get_reviews(link);

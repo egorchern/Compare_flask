@@ -104,7 +104,7 @@
     </form>
     <div id="anime_info_container">
         <div id="anime_image_container" class="align_perfectly">
-            <img src={{info.image_link}}>
+            <img src={{info.image_link}} onError="this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';">
 
         </div>
         <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
@@ -149,7 +149,7 @@
                 <div class="pretext_info_grid">
                     <div class="pretext_info_grid-item">
                         <div class="avatar_picture_container">
-                            <img src={{review.image_link}}>
+                            <img src={{review.image_link}} onError="this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';">
                         </div>
                         <div style="margin-top: 10%;">
                             <p>Username: <span style="color:hsl(240, 100%, 45%)"><strong>{{review.username}}</strong></span></p>
@@ -225,7 +225,7 @@
                 <div class="pretext_info_grid">
                     <div class="pretext_info_grid-item">
                         <div class="avatar_picture_container">
-                            <img src={{review.image_link}}>
+                            <img src={{review.image_link}} onError="this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';">
                         </div>
                         <div style="margin-top: 10%;">
                             <p>Username: <span style="color:hsl(240, 100%, 45%)"><strong>{{review.username}}</strong></span></p>
