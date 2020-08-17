@@ -53,15 +53,17 @@ def index():
 
 @app.route("/anime/<name>", methods=["POST", "GET"])
 def anime(name):
-
+    
     name = sub("%20", " ", name);
     anime_name, idMal = anilist_methods.anime.get_closest_english_name_and_mal_id(name);
+    anime_name = sub("/", "-", anime_name);
+    print(anime_name, idMal);
     global redirect_counter;
     if redirect_counter == 0:
         redirect_counter = 1;
         return redirect(f"/anime/{anime_name}");
     redirect_counter = 0;
-    print(anime_name, idMal);
+
     def mal():
         link = myanimelist_methods.anime.get_link(idMal);
         reviews_list = myanimelist_methods.anime.get_reviews(link);
@@ -104,6 +106,7 @@ def manga(name):
 
     name = sub("%20", " ", name);
     manga_name, idMal = anilist_methods.manga.get_closest_english_name_and_mal_id(name);
+    manga_name = sub("/", "-", manga_name);
     global redirect_counter;
     if redirect_counter == 0:
         redirect_counter = 1;
