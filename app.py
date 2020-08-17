@@ -2,7 +2,7 @@ import myanimelist_methods;
 import imbd_methods;
 import manganelo_methods;
 import anilist_methods;
-from flask import Flask, render_template, request, redirect;
+from quart import Quart, render_template, request, redirect;
 
 import anime_planet_methods;
 from re import sub;
@@ -42,17 +42,17 @@ class anilist:
         self.ranking = ranking;
 
 
-app = Flask(__name__);
+app = Quart(__name__);
 
 redirect_counter = 0;
 
 @app.route("/")
-def index():
-    return render_template("index.html");
+async def index():
+    return await render_template("index.html");
 
 
 @app.route("/anime/<name>", methods=["POST", "GET"])
-def anime(name):
+async def anime(name):
     
     name = sub("%20", " ", name);
     anime_name, idMal = anilist_methods.anime.get_closest_english_name_and_mal_id(name);
@@ -99,10 +99,10 @@ def anime(name):
     imb = imd();
     anl = anilis();
 
-    return render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info, imbd=imb, anilist=anl);
+    return await render_template("anime_query_results.html", mal=mal, anime_planet=pl, info=info, imbd=imb, anilist=anl);
 
 @app.route("/manga/<name>", methods=["POST", "GET"])
-def manga(name):
+async def manga(name):
 
     name = sub("%20", " ", name);
     manga_name, idMal = anilist_methods.manga.get_closest_english_name_and_mal_id(name);
@@ -146,12 +146,12 @@ def manga(name):
     pl = anime_planet();
     mn = manganel();
 
-    return render_template("manga_query_results.html", mal=mal, anime_planet=pl, manganelo=mn, info=info, anilist=anl);
+    return await render_template("manga_query_results.html", mal=mal, anime_planet=pl, manganelo=mn, info=info, anilist=anl);
 
 @app.route("/book/<name>", methods=["POST", "GET"])
-def book(name):
+async def book(name):
     isbn = name;
 
-    return render_template("book_query_results.html", isbn=isbn);
+    return await render_template("book_query_results.html", isbn=isbn);
 
 
