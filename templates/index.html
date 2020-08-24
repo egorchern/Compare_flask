@@ -18,38 +18,7 @@
         gtag('config', 'UA-108190186-4');
 
     </script>
-    <script>
-        function process_search_submit() {
-            if (chosenId === "") {
-                alert("Please choose a category");
-            } else {
-                var text = $("#media_name").val();
-				
-				
-                if (text === "") {
-                    alert("Please enter a name of anime/manga/book you want to search");
-                } else {
-                    var category = chosenId;
-                    if (category === "anime") {
-						
-						link = `/anime/${text}`;
-                        console.log(link);
-                        $('#query_form').attr("action", link);
-                    } else if (category === "manga") {
-                        link = `/manga/${text}`;
-                        $('#query_form').attr("action", link);
-                    } else if (category === "book") {
-                        link = `/book/${text}`;
-                        $('#query_form').attr("action", link );
-					}
-                   
-                    $('#query_form').submit();
-
-                }
-            }
-        }
-
-    </script>
+    
 
     <meta charset="utf-8" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">

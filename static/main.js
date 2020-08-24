@@ -71,3 +71,36 @@ function shrinkText(obj) {
     $(spans[1]).hide();
     $(spans[2]).hide();
 }
+
+function process_search_submit() {
+    if (chosenId === "") {
+        alert("Please choose a category");
+    } else {
+        var text = $("#media_name").val();
+        text = text.replace(" ","_");
+        
+        if (text === "") {
+            alert("Please enter a name of anime/manga/book you want to search");
+        } else {
+            var category = chosenId;
+            if(category === "anime"){
+                let anime_name = "";
+                let mal_id = "";
+                $.ajax({
+                    type: "POST",
+                    url: `/get_name/${category}/${text}`,
+                    async: false,
+                    success: function (response) {
+                        
+                        anime_name = response["anime_name"];
+                        
+                        mal_id = response["mal_id"];
+                    }
+                });
+                console.log(anime_name, mal_id);
+                
+            }
+
+        }
+    }
+}
