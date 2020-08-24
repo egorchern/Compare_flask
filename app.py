@@ -155,3 +155,5 @@ def book(name):
     return render_template("book_query_results.html", isbn=isbn);
 
 
+if __name__ == "__main__":
+    app.run(threaded=True);
