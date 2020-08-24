@@ -2,7 +2,7 @@ import myanimelist_methods;
 import imbd_methods;
 import manganelo_methods;
 import anilist_methods;
-from quart import Quart, render_template, request, redirect;
+from flask import Flask, render_template, request, redirect;
 
 import anime_planet_methods;
 from re import sub;
