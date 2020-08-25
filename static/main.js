@@ -1,4 +1,5 @@
 var chosenId = "";
+var slide_animation_duration = "0.8s";
 
 function activate(id) {
     var obj = $(`#${id}`);
@@ -107,31 +108,42 @@ function process_search_submit() {
                         info = response;
                         info["name"] = anime_name;
                         let info_container = `
-                        <div id="anime_info_container">
-                            <div id="anime_image_container" class="align_perfectly">
-                                <img src=${info["image_link"]} onError="this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';">
+                        <div class="slide_container" id="anime_info_slide_container" style="transform:translateX(-100%);position:absolute">
+                            <div id="anime_info_container" >
+                                <div id="anime_image_container" class="align_perfectly">
+                                    <img src=${info["image_link"]} onError="this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';">
+
+                                </div>
+                                <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                    <p>Name: ${info["name"]}</p>
+
+                                </div>
+                                <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                    <p>Episodes: ${info["episodes"]}</p>
+                                </div>
+                                <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                    <p>Aired: ${info["aired"]}</p>
+                                </div>
+                                <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                    <p>Studios: ${info["studios"]}</p>
+                                </div>
+                                <div id='genres' class="align_perfectly">
+                                    <p>Genres: ${info["genres"]}</p>
+                                </div>
 
                             </div>
-                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
-                                <p>Name: ${info["name"]}</p>
-
-                            </div>
-                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
-                                <p>Episodes: ${info["episodes"]}</p>
-                            </div>
-                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
-                                <p>Aired: ${info["aired"]}</p>
-                            </div>
-                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
-                                <p>Studios: ${info["studios"]}</p>
-                            </div>
-                            <div id='genres' class="align_perfectly">
-                                <p>Genres: ${info["genres"]}</p>
-                            </div>
-
                         </div>
                         `;
                         $('main').append(info_container);
+                        setTimeout(function(){
+                            $('#anime_info_slide_container').css({
+                                "animation-name":"slide-in-from-left",
+                                "animation-duration":slide_animation_duration,
+                                "animation-fill-mode":"forwards",
+                                "animation-timing-function": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+                            
+                            });
+                        }, 80);
                     }
                 });
                 

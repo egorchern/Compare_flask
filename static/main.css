@@ -1,219 +1,234 @@
-		@import url("https://fonts.googleapis.com/css2?family=B612&family=Roboto&display=swap");
-.unselectable{
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  /*
-    Introduced in IE 10.
-    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-  -ms-user-select: none;
-  user-select: none;
+@import url("https://fonts.googleapis.com/css2?family=B612&family=Roboto&display=swap");
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+   
+    -ms-user-select: none;
+    user-select: none;
 }
 
-        body {
-            background-color: hsl(0, 0%, 95%) !important;
-        }
+body {
+    background-color: hsl(0, 0%, 94.5%) !important;
+    overflow-x: hidden;
+}
 
-        * {
-            font-size: calc(12px + 0.2vw)!important;
-            font-family: "Roboto", sans-serif!important;
-        } 
+* {
+    font-size: calc(12px + 0.2vw) !important;
+    font-family: "Roboto", sans-serif !important;
+}
 
-        table {
+main {
+    width: 100%;
+}
 
-            font-weight: 500;
-            text-align: center;
-            width: 100% !important;
-            /*max-width: 300px;*/
-            margin-bottom: 0 !important;
+table {
 
-        }
+    font-weight: 500;
+    text-align: center;
+    width: 100% !important;
+    /*max-width: 300px;*/
+    margin-bottom: 0 !important;
 
-        tbody tr {
-            background-color: white;
+}
 
-        }
+tbody tr {
+    background-color: white;
 
-        tbody tr:nth-child(even) {
-            background-color: hsl(0, 0%, 97%);
+}
 
-        }
+tbody tr:nth-child(even) {
+    background-color: hsl(0, 0%, 97%);
 
-        tbody td {
-            padding: 0.15rem !important;
-        }
+}
 
-        .review {
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-            border: 1.5px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.45rem;
-            background-color: white;
+tbody td {
+    padding: 0.15rem !important;
+}
 
-            padding: 20px;
-            width: 100%;
+.review {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.45rem;
+    background-color: white;
 
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 2vh;
-            overflow-x: hidden;
-            
-        }
+    padding: 20px;
+    width: 100%;
 
-        .review-text {
-            white-space: pre-wrap;
-            word-wrap: break-word;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    overflow-x: hidden;
 
-        }
+}
 
-        .pretext_info_grid {
-            width: 100%;
-            padding: 10px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-column-gap: max(15px, 2.1vw);
+.review-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 
-        }
+}
 
-        .pretext_info_grid-item {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
+.pretext_info_grid {
+    width: 100%;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: max(15px, 2.1vw);
+
+}
+
+.pretext_info_grid-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
 
 
-        }
+}
 
-        .item_flexbox {
-            margin: 2%;
-            display: flex;
-            flex-direction: column;
-            padding:4px;
-            width:36.5%;
-            
-        }
-        
-        .stats_container{
-            width:100%;
-            display:grid;
-            grid-template-columns: 1fr 1fr;
-            grid-row-gap: 1.5vh;
-            grid-column-gap: 1vw;
-            text-align: center;
-            
-        }
-        .stats_container p{
-            font-size: calc(17px + 0.9vw) !important;
+.item_flexbox {
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    width: 36.5%;
 
-        }
+}
 
-        img {
-            max-width:100%;
-            border-radius: 0.35rem;
-            
-            
-        }
-        #anime_info_container{
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-            border: 1.5px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.45rem;
-            
-            max-width: 625px;
-            background-color: white;
-            padding:20px;
-            display:grid;
-            
-            grid-column-gap: 1.25vw;
-            grid-row-gap:5px;
-            
-            margin-left:auto;
-            margin-right: auto;
-            margin-top: 4vh;
-            text-align: center;
-        }
-        #anime_info_container p{
-            font-size: calc(17px + 0.55vw) !important;
-        }
-        
-        .align_perfectly{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .spans{
-            margin-left: 5px;
-            cursor:pointer;
-            text-decoration: underline;
-            color: blue;
-        }
-        .main_container{
-            display:flex;
-            width: 100%;
-            justify-content: center;
-            
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-        .avatar_picture_container{
-            
-        }
-.pretext_info_grid-item > * {
+.stats_container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 1.5vh;
+    grid-column-gap: 1vw;
+    text-align: center;
+
+}
+
+.stats_container p {
+    font-size: calc(17px + 0.9vw) !important;
+
+}
+
+img {
+    max-width: 100%;
+    border-radius: 0.35rem;
+
+
+}
+.slide_container{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#anime_info_container {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.45rem;
+
+    max-width: 625px;
+    background-color: white;
+    padding: 20px;
+    display: grid;
+
+    grid-column-gap: 1.25vw;
+    grid-row-gap: 5px;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4vh;
+    text-align: center;
+}
+
+#anime_info_container p {
+    font-size: calc(17px + 0.55vw) !important;
+}
+
+.align_perfectly {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spans {
+    margin-left: 5px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+
+.main_container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.avatar_picture_container {}
+
+.pretext_info_grid-item>* {
     max-width: 200px;
 }
 
 #goodreads-widget {
-            font-family: georgia, serif;
-            
-            width: 100%;
-            margin-left:auto;
-            margin-right:auto;
-            height: 500px;
-        }
+    font-family: georgia, serif;
 
-        #goodreads-widget h1 {
-            font-weight: normal;
-            font-size: 16px;
-            border-bottom: 1px solid #BBB596;
-            margin-bottom: 0;
-        }
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 500px;
+}
 
-        #goodreads-widget a {
-            text-decoration: none;
-            color: #660;
-        }
+#goodreads-widget h1 {
+    font-weight: normal;
+    font-size: 16px;
+    border-bottom: 1px solid #BBB596;
+    margin-bottom: 0;
+}
 
-        iframe {
-            background-color: #fff;
-            width:100%;
-            height:100%;
-            
-            
-        }
+#goodreads-widget a {
+    text-decoration: none;
+    color: #660;
+}
 
-        #goodreads-widget a:hover {
-            text-decoration: underline;
-        }
-
-        #goodreads-widget a:active {
-            color: #660;
-        }
-
-        #gr_footer {
-            width: 100%;
-            border-top: 1px solid #BBB596;
-            text-align: right;
-        }
-
-        #goodreads-widget .gr_branding {
-            color: #382110;
-            font-size: 11px;
-            text-decoration: none;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
+iframe {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
 
 
+}
 
+#goodreads-widget a:hover {
+    text-decoration: underline;
+}
 
+#goodreads-widget a:active {
+    color: #660;
+}
+
+#gr_footer {
+    width: 100%;
+    border-top: 1px solid #BBB596;
+    text-align: right;
+}
+
+#goodreads-widget .gr_branding {
+    color: #382110;
+    font-size: 11px;
+    text-decoration: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
+}
+@keyframes slide-in-from-left{
+    100%{
+        transform: translateX(0);
+    }
+}

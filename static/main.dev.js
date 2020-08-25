@@ -1,6 +1,7 @@
 "use strict";
 
 var chosenId = "";
+var slide_animation_duration = "0.8s";
 
 function activate(id) {
   var obj = $("#".concat(id));
@@ -100,8 +101,16 @@ function process_search_submit() {
           success: function success(response) {
             info = response;
             info["name"] = anime_name;
-            var info_container = "\n                        <div id=\"anime_info_container\">\n                            <div id=\"anime_image_container\" class=\"align_perfectly\">\n                                <img src=".concat(info["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Name: ").concat(info["name"], "</p>\n\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Episodes: ").concat(info["episodes"], "</p>\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Aired: ").concat(info["aired"], "</p>\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Studios: ").concat(info["studios"], "</p>\n                            </div>\n                            <div id='genres' class=\"align_perfectly\">\n                                <p>Genres: ").concat(info["genres"], "</p>\n                            </div>\n\n                        </div>\n                        ");
+            var info_container = "\n                        <div class=\"slide_container\" id=\"anime_info_slide_container\" style=\"transform:translateX(-100%);position:absolute\">\n                            <div id=\"anime_info_container\" >\n                                <div id=\"anime_image_container\" class=\"align_perfectly\">\n                                    <img src=".concat(info["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Name: ").concat(info["name"], "</p>\n\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Episodes: ").concat(info["episodes"], "</p>\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Aired: ").concat(info["aired"], "</p>\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Studios: ").concat(info["studios"], "</p>\n                                </div>\n                                <div id='genres' class=\"align_perfectly\">\n                                    <p>Genres: ").concat(info["genres"], "</p>\n                                </div>\n\n                            </div>\n                        </div>\n                        ");
             $('main').append(info_container);
+            setTimeout(function () {
+              $('#anime_info_slide_container').css({
+                "animation-name": "slide-in-from-left",
+                "animation-duration": slide_animation_duration,
+                "animation-fill-mode": "forwards",
+                "animation-timing-function": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+              });
+            }, 80);
           }
         });
       }
