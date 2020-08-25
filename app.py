@@ -2,7 +2,7 @@ import myanimelist_methods;
 import imbd_methods;
 import manganelo_methods;
 import anilist_methods;
-from flask import Flask, render_template, request, redirect;
+from flask import Flask, render_template, request, redirect, jsonify;
 
 import anime_planet_methods;
 from re import sub;
@@ -53,6 +53,14 @@ def get_name(name):
     anime_name, mal_id = anilist_methods.anime.get_closest_english_name_and_mal_id(name);
     return {"anime_name":anime_name, "mal_id":mal_id};
 
+@app.route("/anime/mal_info/<mal_id>", methods=["POST","GET"])
+def get_info(mal_id):
+    
+    mal_link = myanimelist_methods.anime.get_link(mal_id);
+    info = myanimelist_methods.anime.get_info(mal_link);
+    info_as_dict = vars(info);
+    return info_as_dict;
+    
 
 
 @app.route("/book/<name>", methods=["POST", "GET"])

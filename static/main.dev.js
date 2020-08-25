@@ -78,6 +78,7 @@ function process_search_submit() {
     if (text === "") {
       alert("Please enter a name of anime/manga/book you want to search");
     } else {
+      $('main').empty();
       var category = chosenId;
 
       if (category === "anime") {
@@ -92,7 +93,17 @@ function process_search_submit() {
             mal_id = response["mal_id"];
           }
         });
-        console.log(anime_name, mal_id);
+        var info = {};
+        $.ajax({
+          type: "POST",
+          url: "/anime/mal_info/".concat(mal_id),
+          success: function success(response) {
+            info = response;
+            info["name"] = anime_name;
+            var info_container = "\n                        <div id=\"anime_info_container\">\n                            <div id=\"anime_image_container\" class=\"align_perfectly\">\n                                <img src=".concat(info["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Name: ").concat(info["name"], "</p>\n\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Episodes: ").concat(info["episodes"], "</p>\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Aired: ").concat(info["aired"], "</p>\n                            </div>\n                            <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                <p>Studios: ").concat(info["studios"], "</p>\n                            </div>\n                            <div id='genres' class=\"align_perfectly\">\n                                <p>Genres: ").concat(info["genres"], "</p>\n                            </div>\n\n                        </div>\n                        ");
+            $('main').append(info_container);
+          }
+        });
       }
     }
   }

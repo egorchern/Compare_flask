@@ -362,4 +362,5 @@ if __name__ == "__main__":
 
     link = anime.get_link("38481");
     info = anime.get_info(link);
+    temp = vars(info);
     print("fa");

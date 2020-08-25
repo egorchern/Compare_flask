@@ -82,6 +82,7 @@ function process_search_submit() {
         if (text === "") {
             alert("Please enter a name of anime/manga/book you want to search");
         } else {
+            $('main').empty();
             var category = chosenId;
             if(category === "anime"){
                 let anime_name = "";
@@ -97,7 +98,44 @@ function process_search_submit() {
                         mal_id = response["mal_id"];
                     }
                 });
-                console.log(anime_name, mal_id);
+                let info = {};
+                $.ajax({
+                    type: "POST",
+                    url: `/anime/mal_info/${mal_id}`,
+                    success: function (response) {
+                        
+                        info = response;
+                        info["name"] = anime_name;
+                        let info_container = `
+                        <div id="anime_info_container">
+                            <div id="anime_image_container" class="align_perfectly">
+                                <img src=${info["image_link"]} onError="this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';">
+
+                            </div>
+                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                <p>Name: ${info["name"]}</p>
+
+                            </div>
+                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                <p>Episodes: ${info["episodes"]}</p>
+                            </div>
+                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                <p>Aired: ${info["aired"]}</p>
+                            </div>
+                            <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
+                                <p>Studios: ${info["studios"]}</p>
+                            </div>
+                            <div id='genres' class="align_perfectly">
+                                <p>Genres: ${info["genres"]}</p>
+                            </div>
+
+                        </div>
+                        `;
+                        $('main').append(info_container);
+                    }
+                });
+                
+
                 
             }
 
