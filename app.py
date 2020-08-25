@@ -2,8 +2,8 @@ import myanimelist_methods;
 import imbd_methods;
 import manganelo_methods;
 import anilist_methods;
-from flask import Flask, render_template, request, redirect, jsonify;
-
+from flask import Flask, render_template, request, redirect;
+import json;
 import anime_planet_methods;
 from re import sub;
 
@@ -61,7 +61,23 @@ def get_info(mal_id):
     info_as_dict = vars(info);
     return info_as_dict;
     
+@app.route("/anime/mal_reviews/<mal_id>", methods=["POST","GET"])
+def get_mal_reviews(mal_id):
+    mal_link = myanimelist_methods.anime.get_link(mal_id);
+    reviews = myanimelist_methods.anime.get_reviews(mal_link);
+    
+    for i in range(0, len(reviews)):
+        reviews[i] = vars(reviews[i]);
+    
+    return json.dumps(reviews);
 
+@app.route("/anime/mal_ranking/<mal_id>", methods=["POST", "GET"])
+def get_mal_ranking(mal_id):
+    mal_link = myanimelist_methods.anime.get_link(mal_id);
+    score, ranking = myanimelist_methods.anime.get_score_and_ranking(mal_link);
+    return {"score":score, "ranking": ranking};
+    
+    
 
 @app.route("/book/<name>", methods=["POST", "GET"])
 def book(name):
