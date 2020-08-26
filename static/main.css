@@ -162,7 +162,7 @@ img {
     color: blue;
 }
 
-.main_container {
+#main_container {
     display: flex;
     width: 100%;
     justify-content: center;

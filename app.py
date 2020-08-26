@@ -9,37 +9,7 @@ from re import sub;
 
 
 
-class myanimelist:
-    def __init__(self, reviews_list, average_rating, ranking):
-        self.reviews_list = reviews_list;
-        self.average_rating = average_rating;
-        self.ranking = ranking;
 
-
-class animePlanet:
-    def __init__(self, reviews_list, average_rating, ranking):
-        self.reviews_list = reviews_list;
-        self.average_rating = average_rating;
-        self.ranking = ranking;
-
-
-class imbd:
-    def __init__(self, reviews_list, average_rating, ranking):
-        self.reviews_list = reviews_list;
-        self.average_rating = average_rating;
-        self.ranking = ranking;
-
-
-class manganelo:
-    def __init__(self, average_rating, ranking):
-        self.average_rating = average_rating;
-        self.ranking = ranking;
-
-
-class anilist:
-    def __init__(self, average_rating, ranking):
-        self.average_rating = average_rating;
-        self.ranking = ranking;
 
 
 app = Flask(__name__);
@@ -76,8 +46,39 @@ def get_mal_ranking(mal_id):
     mal_link = myanimelist_methods.anime.get_link(mal_id);
     score, ranking = myanimelist_methods.anime.get_score_and_ranking(mal_link);
     return {"score":score, "ranking": ranking};
-    
-    
+
+@app.route("/anime/anime_planet_ranking/<anime_name>", methods=["POST", "GET"])
+def get_anime_planet_ranking(anime_name):
+    link = anime_planet_methods.anime.get_link(anime_name);
+    score, ranking = anime_planet_methods.anime.get_score_and_ranking(link);
+    return  {"score":score, "ranking": ranking};  
+
+@app.route("/anime/anime_planet_reviews/<anime_name>", methods=["POST", "GET"])
+def get_anime_planet_reviews(anime_name):
+    link = anime_planet_methods.anime.get_link(anime_name);
+    reviews = anime_planet_methods.anime.get_reviews(link);
+    for i in range(0, len(reviews)):
+        reviews[i] = vars(reviews[i]);
+    return json.dumps(reviews);
+
+@app.route("/anime/anilist/<anime_name>", methods=["POST", "GET"])
+def get_anilist_ranking(anime_name):
+    score, ranking = anilist_methods.anime.get_score_and_ranking(anime_name);
+    return  {"score":score, "ranking": ranking}; 
+
+@app.route("/anime/imbd_ranking/<anime_name>", methods=["POST", "GET"])
+def get_imbd_ranking(anime_name):
+    link = imbd_methods.anime.get_link(anime_name);
+    score, ranking = imbd_methods.anime.get_score_and_ranking(link);
+    return  {"score":score, "ranking": ranking}; 
+
+@app.route("/anime/imbd_reviews/<anime_name>", methods=["POST", "GET"])
+def get_imbd_reviews(anime_name):
+    link = imbd_methods.anime.get_link(anime_name);
+    reviews = imbd_methods.anime.get_reviews(link);
+    for i in range(0, len(reviews)):
+        reviews[i] = vars(reviews[i]);
+    return json.dumps(reviews);
 
 @app.route("/book/<name>", methods=["POST", "GET"])
 def book(name):

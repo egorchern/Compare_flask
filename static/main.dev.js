@@ -94,59 +94,140 @@ function process_search_submit() {
             mal_id = response["mal_id"];
           }
         });
-        var info = {};
-        $.ajax({
-          type: "POST",
-          url: "/anime/mal_info/".concat(mal_id),
-          success: function success(response) {
-            info = response;
-            info["name"] = anime_name;
-            var info_container = "\n                        <div class=\"slide_container\" id=\"anime_info_slide_container\" style=\"transform:translateX(-100%);\">\n                            <div id=\"anime_info_container\" >\n                                <div id=\"anime_image_container\" class=\"align_perfectly\">\n                                    <img src=".concat(info["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Name: ").concat(info["name"], "</p>\n\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Episodes: ").concat(info["episodes"], "</p>\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Aired: ").concat(info["aired"], "</p>\n                                </div>\n                                <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                                    <p>Studios: ").concat(info["studios"], "</p>\n                                </div>\n                                <div id='genres' class=\"align_perfectly\">\n                                    <p>Genres: ").concat(info["genres"], "</p>\n                                </div>\n\n                            </div>\n                        </div>\n                        ");
-            $('main').append(info_container);
-            setTimeout(function () {
-              $('#anime_info_slide_container').css({
-                "animation-name": "slide-in-from-left",
-                "animation-duration": slide_animation_duration,
-                "animation-fill-mode": "forwards",
-                "animation-timing-function": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
-              });
-            }, 80);
-          }
-        });
-        var score_and_ranking = {};
-        $.ajax({
-          type: "POST",
-          url: "/anime/mal_ranking/".concat(mal_id),
-          success: function success(response) {
-            score_and_ranking = response;
-            var reviews = [];
-            $.ajax({
-              type: "POST",
-              url: "/anime/mal_reviews/".concat(mal_id),
-              success: function success(response) {
-                reviews = JSON.parse(response);
-                var mal_flexbox = "\n                                <div class=\"item_flexbox\" id=\"mal_slider\" style=\"transform:translateX(-100%)\">\n                                    <div class=\"stats_container\">\n                                        <div style=\"grid-column-start: 1; grid-column-end: 3; text-align: center;\">\n                                            <p style=\"font-size:calc(18px + 1.4vw)!important\">Myanimelist</p>\n                                        </div>\n                                        <div>\n                                            <p>Average rating:</p>\n                                            <p>".concat(score_and_ranking["score"], " / 10</p>\n                                        </div>\n                                        <div>\n                                            <p>Ranked:</p>\n                                            <p>#").concat(score_and_ranking["ranking"], "</p>\n                                        </div>\n                        \n                        \n                                    </div>\n                                \n                                \n                                ");
-
-                for (var i = 0; i < reviews.length; i += 1) {
-                  mal_flexbox += "\n                                    \n                                    <div class=\"review\">\n\n                                        <div class=\"pretext_info_grid\">\n                                            <div class=\"pretext_info_grid-item\">\n                                                <div class=\"avatar_picture_container\">\n                                                    <img src=".concat(reviews[i]["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n                                                </div>\n                                                <div style=\"margin-top: 10%;\">\n                                                    <p>Username: <span style=\"color:hsl(240, 100%, 45%)\"><strong>").concat(reviews[i]["username"], "</strong></span></p>\n                                                    <p>Helpful <strong>(").concat(reviews[i]["helpful_points"], ")</strong></p>\n                                                </div>\n\n\n                                            </div>\n\n                                            <div class=\"pretext_info_grid-item\">\n                                                <table class=\"table table-bordered score-table\">\n                                                    <thead>\n                                                        <tr>\n                                                            <th>Category</th>\n                                                            <th>Score</th>\n                                                        </tr>\n                                                    </thead>\n                                                    <tbody>\n                                                        <tr>\n                                                            <td>Overall</td>\n                                                            <td>").concat(reviews[i]["scores"][0], "</td>\n                                                        </tr>\n                                                        <tr>\n                                                            <td>Story</td>\n                                                            <td>").concat(reviews[i]["scores"][1], "</td>\n                                                        </tr>\n                                                        <tr>\n                                                            <td>Animation</td>\n                                                            <td>").concat(reviews[i]["scores"][2], "</td>\n                                                        </tr>\n                                                        <tr>\n                                                            <td>Sound</td>\n                                                            <td>").concat(reviews[i]["scores"][3], "</td>\n                                                        </tr>\n                                                        <tr>\n                                                            <td>Characters</td>\n                                                            <td>").concat(reviews[i]["scores"][4], "</td>\n                                                        </tr>\n                                                        <tr>\n                                                            <td>Enjoyment</td>\n                                                            <td>").concat(reviews[i]["scores"][5], "</td>\n                                                        </tr>\n\n\n                                                    </tbody>\n                                                </table>\n                                            </div>\n                                        </div>\n\n                                        <pre class=\"review-text\">\n                                        ").concat(reviews[i]["preview_text"], "<span onclick=\"expandText(this)\" class=\"spans\">Read more</span><span style=\"display:none\">").concat(reviews[i]["further_text"], "</span><span onclick=\"shrinkText(this)\" style=\"display:none\" class=\"spans\">Read less</span>\n                                        </pre>\n\n                                    </div>\n                                    \n                                    ");
-                }
-
-                mal_flexbox += "\n                                </div>";
-                $('main').append("\n                                <div class=\"main_container\">\n            \n                                </div>\n                                ");
-                $('.main_container').append(mal_flexbox);
-                setTimeout(function () {
-                  $('#mal_slider').css({
-                    "animation-name": "slide-in-from-left",
-                    "animation-duration": slide_animation_duration,
-                    "animation-fill-mode": "forwards",
-                    "animation-timing-function": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
-                  });
-                }, 80);
-              }
-            });
-          }
-        });
+        anime_load_content(anime_name, mal_id);
       }
     }
   }
+}
+
+function anime_load_content(anime_name, mal_id) {
+  var info = {};
+  $.ajax({
+    type: "POST",
+    url: "/anime/mal_info/".concat(mal_id),
+    success: function success(response) {
+      info = response;
+      info["name"] = anime_name;
+      var info_container = "\n            <div class=\"slide_container\" id=\"anime_info_slide_container\" style=\"transform:translateX(-100%);\">\n                <div id=\"anime_info_container\" >\n                    <div id=\"anime_image_container\" class=\"align_perfectly\">\n                        <img src=".concat(info["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n\n                    </div>\n                    <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                        <p>Name: ").concat(info["name"], "</p>\n\n                    </div>\n                    <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                        <p>Episodes: ").concat(info["episodes"], "</p>\n                    </div>\n                    <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                        <p>Aired: ").concat(info["aired"], "</p>\n                    </div>\n                    <div class=\"align_perfectly\" style=\"border-bottom: 1.5px solid hsl(210, 14%, 89%);\">\n                        <p>Studios: ").concat(info["studios"], "</p>\n                    </div>\n                    <div id='genres' class=\"align_perfectly\">\n                        <p>Genres: ").concat(info["genres"], "</p>\n                    </div>\n\n                </div>\n            </div>\n            ");
+      $('main').prepend(info_container);
+      bind_left_slide_animation('#anime_info_slide_container');
+    }
+  });
+  $('main').append("<div id=\"main_container\">\n            \n    </div>");
+  var mal = {
+    "score": 0,
+    "ranking": 0,
+    "reviews": []
+  };
+  $.ajax({
+    type: "POST",
+    url: "/anime/mal_ranking/".concat(mal_id),
+    success: function success(response) {
+      mal["score"] = response["score"];
+      mal["ranking"] = response["ranking"];
+      $.ajax({
+        type: "POST",
+        url: "/anime/mal_reviews/".concat(mal_id),
+        success: function success(response) {
+          mal["reviews"] = JSON.parse(response);
+          var mal_flexbox = "\n                    <div class=\"item_flexbox\" id=\"mal_slider\" style=\"transform:translateX(-100%)\">\n                        <div class=\"stats_container\">\n                            <div style=\"grid-column-start: 1; grid-column-end: 3; text-align: center;\">\n                                <p style=\"font-size:calc(18px + 1.4vw)!important\">Myanimelist</p>\n                            </div>\n                            <div>\n                                <p>Average rating:</p>\n                                <p>".concat(mal["score"], " / 10</p>\n                            </div>\n                            <div>\n                                <p>Ranked:</p>\n                                <p>#").concat(mal["ranking"], "</p>\n                            </div>\n            \n            \n                        </div>\n                                \n                                \n                    ");
+
+          for (var i = 0; i < mal["reviews"].length; i += 1) {
+            mal_flexbox += "\n                                    \n                        <div class=\"review\">\n\n                            <div class=\"pretext_info_grid\">\n                                <div class=\"pretext_info_grid-item\">\n                                    <div class=\"avatar_picture_container\">\n                                        <img src=".concat(mal["reviews"][i]["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n                                    </div>\n                                    <div style=\"margin-top: 10%;\">\n                                        <p>Username: <span style=\"color:hsl(240, 100%, 45%)\"><strong>").concat(mal["reviews"][i]["username"], "</strong></span></p>\n                                        <p>Helpful <strong>(").concat(mal["reviews"][i]["helpful_points"], ")</strong></p>\n                                    </div>\n\n\n                                </div>\n\n                                <div class=\"pretext_info_grid-item\">\n                                    <table class=\"table table-bordered score-table\">\n                                        <thead>\n                                            <tr>\n                                                <th>Category</th>\n                                                <th>Score</th>\n                                            </tr>\n                                        </thead>\n                                        <tbody>\n                                            <tr>\n                                                <td>Overall</td>\n                                                <td>").concat(mal["reviews"][i]["scores"][0], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Story</td>\n                                                <td>").concat(mal["reviews"][i]["scores"][1], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Animation</td>\n                                                <td>").concat(mal["reviews"][i]["scores"][2], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Sound</td>\n                                                <td>").concat(mal["reviews"][i]["scores"][3], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Characters</td>\n                                                <td>").concat(mal["reviews"][i]["scores"][4], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Enjoyment</td>\n                                                <td>").concat(mal["reviews"][i]["scores"][5], "</td>\n                                            </tr>\n\n\n                                        </tbody>\n                                    </table>\n                                </div>\n                            </div>\n\n                            <pre class=\"review-text\">\n                            ").concat(mal["reviews"][i]["preview_text"], "<span onclick=\"expandText(this)\" class=\"spans\">Read more</span><span style=\"display:none\">").concat(mal["reviews"][i]["further_text"], "</span><span onclick=\"shrinkText(this)\" style=\"display:none\" class=\"spans\">Read less</span>\n                            </pre>\n\n                        </div>\n                                    \n                        ");
+          }
+
+          mal_flexbox += "\n                                </div>";
+          $('#main_container').prepend(mal_flexbox);
+          bind_left_slide_animation('#mal_slider');
+        }
+      });
+    }
+  });
+  var anime_name_anime_planet = anime_name.replace("_", "-");
+  var anime_planet = {
+    "score": 0,
+    "ranking": 0,
+    "reviews": []
+  };
+  $.ajax({
+    type: "POST",
+    url: "/anime/anime_planet_ranking/".concat(anime_name_anime_planet),
+    success: function success(response) {
+      anime_planet["score"] = response["score"];
+      anime_planet["ranking"] = response["ranking"];
+      $.ajax({
+        type: "POST",
+        url: "/anime/anime_planet_reviews/".concat(anime_name_anime_planet),
+        success: function success(response) {
+          anime_planet["reviews"] = JSON.parse(response);
+          var flexbox = "\n                    <div class=\"item_flexbox\" id=\"anime_planet_slider\" style=\"transform:translateX(100%)\">\n                        <div class=\"stats_container\">\n                            <div style=\"grid-column-start: 1; grid-column-end: 3; text-align: center;\">\n                                <p style=\"font-size:calc(18px + 1.4vw)!important\">Anime Planet</p>\n                            </div>\n                            <div>\n                                <p>Average rating:</p>\n                                <p>".concat(anime_planet["score"], " / 5</p>\n                            </div>\n                            <div>\n                                <p>Ranked:</p>\n                                <p>").concat(anime_planet["ranking"], "</p>\n                            </div>\n            \n            \n                        </div>\n                            \n                            \n                    ");
+
+          for (var i = 0; i < anime_planet["reviews"].length; i += 1) {
+            flexbox += "\n                                                \n                        <div class=\"review\">\n\n                            <div class=\"pretext_info_grid\">\n                                <div class=\"pretext_info_grid-item\">\n                                    <div class=\"avatar_picture_container\">\n                                        <img src=".concat(anime_planet["reviews"][i]["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n                                    </div>\n                                    <div style=\"margin-top: 10%;\">\n                                        <p>Username: <span style=\"color:hsl(240, 100%, 45%)\"><strong>").concat(anime_planet["reviews"][i]["username"], "</strong></span></p>\n                                        <p>Helpful <strong>(").concat(anime_planet["reviews"][i]["helpful_points"], ")</strong></p>\n                                    </div>\n\n\n                                </div>\n\n                                <div class=\"pretext_info_grid-item\">\n                                    <table class=\"table table-bordered score-table\">\n                                        <thead>\n                                            <tr>\n                                                <th>Category</th>\n                                                <th>Score</th>\n                                            </tr>\n                                        </thead>\n                                        <tbody>\n                                            <tr>\n                                                <td>Overall</td>\n                                                <td>").concat(anime_planet["reviews"][i]["scores"][4], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Story</td>\n                                                <td>").concat(anime_planet["reviews"][i]["scores"][0], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Animation</td>\n                                                <td>").concat(anime_planet["reviews"][i]["scores"][1], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Sound</td>\n                                                <td>").concat(anime_planet["reviews"][i]["scores"][2], "</td>\n                                            </tr>\n                                            <tr>\n                                                <td>Characters</td>\n                                                <td>").concat(anime_planet["reviews"][i]["scores"][3], "</td>\n                                            </tr>\n\n\n                                        </tbody>\n                                    </table>\n                                </div>\n                            </div>\n\n                            <pre class=\"review-text\">\n                            ").concat(anime_planet["reviews"][i]["preview_text"], "<span onclick=\"expandText(this)\" class=\"spans\">Read more</span><span style=\"display:none\">").concat(anime_planet["reviews"][i]["further_text"], "</span><span onclick=\"shrinkText(this)\" style=\"display:none\" class=\"spans\">Read less</span>\n                            </pre>\n\n                        </div>\n                                                \n                        ");
+          }
+
+          flexbox += "\n                    </div>";
+          $('#main_container').prepend(flexbox);
+          bind_left_slide_animation('#anime_planet_slider');
+        }
+      });
+    }
+  });
+  var anilist = {
+    "score": 0,
+    "ranking": 0
+  };
+  $.ajax({
+    type: "POST",
+    url: "/anime/anilist/".concat(anime_name),
+    success: function success(response) {
+      anilist["score"] = response["score"];
+      anilist["ranking"] = response["ranking"];
+      var flexbox = "\n            <div class=\"item_flexbox\" id=\"anilist_slider\" style=\"transform:translateX(-100%)\">\n                        <div class=\"stats_container\">\n                            <div style=\"grid-column-start: 1; grid-column-end: 3; text-align: center;\">\n                                <p style=\"font-size:calc(18px + 1.4vw)!important\">Anilist</p>\n                            </div>\n                            <div>\n                                <p>Average rating:</p>\n                                <p>".concat(anilist["score"], " / 100</p>\n                            </div>\n                            <div>\n                                <p>Ranked:</p>\n                                <p>").concat(anilist["ranking"], "</p>\n                            </div>\n            \n            \n                        </div>\n\n            ");
+      flexbox += "\n                    </div>";
+      $('#main_container').append(flexbox);
+      bind_left_slide_animation('#anilist_slider');
+    }
+  });
+  var imbd = {
+    "score": 0,
+    "ranking": 0,
+    "reviews": []
+  };
+  var imbd_anime_name = anime_name.replace("_", "+");
+  $.ajax({
+    type: "POST",
+    url: "/anime/imbd_ranking/".concat(imbd_anime_name),
+    success: function success(response) {
+      imbd["score"] = response["score"];
+      imbd["ranking"] = response["ranking"];
+      $.ajax({
+        type: "POST",
+        url: "/anime/imbd_reviews/".concat(imbd_anime_name),
+        success: function success(response) {
+          imbd["reviews"] = JSON.parse(response);
+          var flexbox = "\n                    <div class=\"item_flexbox\" id=\"imbd_slider\" style=\"transform:translateX(-100%)\">\n                        <div class=\"stats_container\">\n                            <div style=\"grid-column-start: 1; grid-column-end: 3; text-align: center;\">\n                                <p style=\"font-size:calc(18px + 1.4vw)!important\">IMBD</p>\n                            </div>\n                            <div>\n                                <p>Average rating:</p>\n                                <p>".concat(imbd["score"], " / 10</p>\n                            </div>\n                            <div>\n                                <p>Ranked:</p>\n                                <p>").concat(imbd["ranking"], "</p>\n                            </div>\n            \n            \n                        </div>\n                            \n                            \n                    ");
+
+          for (var i = 0; i < imbd["reviews"].length; i += 1) {
+            flexbox += "\n                                                \n                        <div class=\"review\">\n\n                            <div class=\"pretext_info_grid\">\n                                <div class=\"pretext_info_grid-item\">\n                                    <div class=\"avatar_picture_container\">\n                                        <img src=".concat(imbd["reviews"][i]["image_link"], " onError=\"this.onerror=null;this.src='{{url_for('static', filename = 'onerror_avatar.png' )}}';\">\n                                    </div>\n                                    <div style=\"margin-top: 10%;\">\n                                        <p>Username: <span style=\"color:hsl(240, 100%, 45%)\"><strong>").concat(imbd["reviews"][i]["username"], "</strong></span></p>\n                                        <p>Helpful <strong>(").concat(imbd["reviews"][i]["helpful_points"], ")</strong></p>\n                                    </div>\n\n\n                                </div>\n\n                                <div class=\"pretext_info_grid-item\">\n                                    <table class=\"table table-bordered score-table\">\n                                        <thead>\n                                            <tr>\n                                                <th>Category</th>\n                                                <th>Score</th>\n                                            </tr>\n                                        </thead>\n                                        <tbody>\n                                            <tr>\n                                                <td>Overall</td>\n                                                <td>").concat(imbd["reviews"][i]["scores"][0], "</td>\n                                            </tr>\n                                            \n\n\n                                        </tbody>\n                                    </table>\n                                </div>\n                            </div>\n\n                            <pre class=\"review-text\">\n                            ").concat(imbd["reviews"][i]["preview_text"], "<span onclick=\"expandText(this)\" class=\"spans\">Read more</span><span style=\"display:none\">").concat(imbd["reviews"][i]["further_text"], "</span><span onclick=\"shrinkText(this)\" style=\"display:none\" class=\"spans\">Read less</span>\n                            </pre>\n\n                        </div>\n                                                \n                        ");
+          }
+
+          flexbox += "\n                    </div>";
+          $('#main_container').append(flexbox);
+          bind_left_slide_animation('#imbd_slider');
+        }
+      });
+    }
+  });
+}
+
+function bind_left_slide_animation(selector) {
+  setTimeout(function () {
+    $(selector).css({
+      "animation-name": "slide-in-from-left",
+      "animation-duration": slide_animation_duration,
+      "animation-fill-mode": "forwards",
+      "animation-timing-function": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+    });
+  }, 50);
 }
