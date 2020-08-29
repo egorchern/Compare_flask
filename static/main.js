@@ -1,4 +1,16 @@
+window.onpopstate = e =>{
+    $('main').empty();
+    let data = e.state;
+    let page_content = data["content"];
+    console.log(page_content);
+    $('main').append(page_content);
+    
+
+};
+var contentCopy = $('main').html();
 var chosenId = "";
+var media_name = "";
+var media_category = "";
 var slide_animation_duration = "0.8s";
 
 function activate(id) {
@@ -83,8 +95,12 @@ function process_search_submit() {
         if (text === "") {
             alert("Please enter a name of anime/manga/book you want to search");
         } else {
+            
+            
             $('main').empty();
             var category = chosenId;
+            
+            
             if (category === "anime") {
                 let anime_name = "";
                 let mal_id = "";
@@ -99,6 +115,10 @@ function process_search_submit() {
                         mal_id = response["mal_id"];
                     }
                 });
+                media_name = anime_name;
+                media_category = category;
+                history.pushState({"content":contentCopy}, anime_name, `/${category}/${anime_name.replace(/ /g,"_")}`)
+                document.title = anime_name;
                 anime_load_content(anime_name, mal_id);
 
             } else if (category === "manga") {
@@ -115,7 +135,12 @@ function process_search_submit() {
                         mal_id = response["mal_id"];
                     }
                 });
+                media_name = manga_name;
+                media_category = category;
+                history.pushState({"content":contentCopy}, manga_name, `/${category}/${manga_name.replace(/ /g,"_")}`)
+                document.title = manga_name;
                 manga_load_content(manga_name, mal_id);
+
             } else if (category === "book") {
                 $('main').prepend(`
                 <div class="main_container">
@@ -300,6 +325,7 @@ function anime_load_content(anime_name, mal_id) {
 
                     $('#main_container').prepend(mal_flexbox);
                     bind_left_slide_animation('#mal_slider');
+                    
 
                 }
             });
@@ -414,6 +440,7 @@ function anime_load_content(anime_name, mal_id) {
                     $('#main_container').prepend(flexbox);
 
                     bind_left_slide_animation('#anime_planet_slider');
+                    
 
 
                 }
@@ -456,6 +483,7 @@ function anime_load_content(anime_name, mal_id) {
             $('#main_container').append(flexbox);
 
             bind_left_slide_animation('#anilist_slider');
+            
 
         }
     });
@@ -552,6 +580,7 @@ function anime_load_content(anime_name, mal_id) {
                     $('#main_container').append(flexbox);
 
                     bind_left_slide_animation('#imbd_slider');
+                    
 
 
                 }
@@ -716,6 +745,7 @@ function manga_load_content(manga_name, mal_id) {
 
                     $('#main_container').prepend(mal_flexbox);
                     bind_left_slide_animation('#mal_slider');
+                    
 
                 }
             });
@@ -827,6 +857,7 @@ function manga_load_content(manga_name, mal_id) {
                     $('#main_container').prepend(flexbox);
 
                     bind_left_slide_animation('#anime_planet_slider');
+                    
 
 
                 }
@@ -869,6 +900,7 @@ function manga_load_content(manga_name, mal_id) {
             $('#main_container').append(flexbox);
 
             bind_left_slide_animation('#anilist_slider');
+            
 
         }
     });
@@ -905,8 +937,9 @@ function manga_load_content(manga_name, mal_id) {
             flexbox += `
                     </div>`;
             $('#main_container').append(flexbox);
-
+            
             bind_left_slide_animation('#manganelo_slider');
+            
         }
     });
 
@@ -922,5 +955,9 @@ function bind_left_slide_animation(selector) {
             "animation-timing-function": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
 
         });
+        contentCopy = $('main').html();
+        history.replaceState({"content":contentCopy}, media_name, `/${media_category}/${media_name.replace(/ /g,"_")}`)
     }, 50);
+    
 }
+

@@ -1,6 +1,17 @@
 "use strict";
 
+window.onpopstate = function (e) {
+  $('main').empty();
+  var data = e.state;
+  var page_content = data["content"];
+  console.log(page_content);
+  $('main').append(page_content);
+};
+
+var contentCopy = $('main').html();
 var chosenId = "";
+var media_name = "";
+var media_category = "";
 var slide_animation_duration = "0.8s";
 
 function activate(id) {
@@ -94,6 +105,12 @@ function process_search_submit() {
             mal_id = response["mal_id"];
           }
         });
+        media_name = anime_name;
+        media_category = category;
+        history.pushState({
+          "content": contentCopy
+        }, anime_name, "/".concat(category, "/").concat(anime_name.replace(/ /g, "_")));
+        document.title = anime_name;
         anime_load_content(anime_name, mal_id);
       } else if (category === "manga") {
         var manga_name = "";
@@ -107,6 +124,12 @@ function process_search_submit() {
             _mal_id = response["mal_id"];
           }
         });
+        media_name = manga_name;
+        media_category = category;
+        history.pushState({
+          "content": contentCopy
+        }, manga_name, "/".concat(category, "/").concat(manga_name.replace(/ /g, "_")));
+        document.title = manga_name;
         manga_load_content(manga_name, _mal_id);
       } else if (category === "book") {
         $('main').prepend("\n                <div class=\"main_container\">\n                    <div class=\"slide_container\" style=\"transform:translateX(-100%)\" id=\"goodreads_slider\">\n                    \n                        <div class=\"item_flexbox\">\n                            <p style=\"font-size:calc(18px + 1.4vw)!important; text-align: center; width:100%\">Goodreads</p>\n                            <div class=\"review\">\n\n                                <div id=\"goodreads-widget\">\n\n                                    <iframe id=\"the_iframe\" src=\"https://www.goodreads.com/api/reviews_widget_iframe?did=75589&format=html&header_text=q&isbn=".concat(text, "&links=660&review_back=fff&stars=000&text=000\" frameborder=\"0\"></iframe>\n                                    \n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                "));
@@ -352,5 +375,9 @@ function bind_left_slide_animation(selector) {
       "animation-fill-mode": "forwards",
       "animation-timing-function": "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
     });
+    contentCopy = $('main').html();
+    history.replaceState({
+      "content": contentCopy
+    }, media_name, "/".concat(media_category, "/").concat(media_name.replace(/ /g, "_")));
   }, 50);
 }

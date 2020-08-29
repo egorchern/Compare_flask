@@ -10,6 +10,7 @@ timeout_amount = 5;
 class manga:
     def get_link(name):
         try:
+            name = sub("[^a-zA-Z0-9 ]", "", name)
             name = sub(" ", "_", name);
 
             url = f"https://mangakakalot.com/search/story/{name}";
@@ -32,6 +33,6 @@ class manga:
             return "NULL", "NULL"
 if __name__ == "__main__":
 
-    link = manga.get_link("solo leveling");
+    link = manga.get_link("rent-a-girlfriend");
     score, rank = manga.get_score_and_ranking(link);
     print(score);
