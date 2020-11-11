@@ -12,6 +12,25 @@ var chosenId = "";
 var media_name = "";
 var media_category = "";
 var slide_animation_duration = "0.8s";
+function determine_if_skipped(){
+    let path = location.pathname;
+    if (path != "/"){
+        let category, name;
+        let temp = path.split("/");
+        category = temp[1];
+        name = temp[2];
+        console.log(name, category);
+        $("#media_name").val(name);
+        if(category === "anime" || category === "manga" || category === "book"){
+            
+            activate(category);
+            process_search_submit();
+        }
+        else{
+            alert("Invalid category in the URL");
+        }
+    }
+}
 
 function activate(id) {
     var obj = $(`#${id}`);
@@ -614,13 +633,13 @@ function manga_load_content(manga_name, mal_id) {
 
                     </div>
                     <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
-                        <p>Episodes: ${info["episodes"]}</p>
+                        <p>Chapters: ${info["episodes"]}</p>
                     </div>
                     <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
-                        <p>Aired: ${info["aired"]}</p>
+                        <p>Released: ${info["aired"]}</p>
                     </div>
                     <div class="align_perfectly" style="border-bottom: 1.5px solid hsl(210, 14%, 89%);">
-                        <p>Studios: ${info["studios"]}</p>
+                        <p>Mangakas: ${info["studios"]}</p>
                     </div>
                     <div id='genres' class="align_perfectly">
                         <p>Genres: ${info["genres"]}</p>
@@ -961,3 +980,6 @@ function bind_left_slide_animation(selector) {
     
 }
 
+document.addEventListener("DOMContentLoaded", function(ev){
+    determine_if_skipped();
+})

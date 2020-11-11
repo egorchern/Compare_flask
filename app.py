@@ -18,6 +18,10 @@ app = Flask(__name__);
 def index():
     return render_template("index.html");
 
+@app.route("/<category>/<name>", methods=["POST", "GET"])
+def get_page(category, name):
+    return render_template("index.html");
+
 @app.route("/get_name/anime/<name>", methods=["POST", "GET"])
 def get_anime_name(name):
     anime_name, mal_id = anilist_methods.anime.get_closest_english_name_and_mal_id(name);
